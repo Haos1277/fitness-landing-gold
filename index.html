@@ -34,22 +34,34 @@
 
         h1, h2, h3 { font-family: 'Cinzel Decorative', cursive; color: var(--gold); }
 
-        /* --- 3D BACKGROUND --- */
+        /* --- THREE.JS BACKGROUND --- */
         #canvas-container {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100vh;
-            z-index: 1;
+            z-index: 0;
             pointer-events: none;
         }
 
         .overlay-mask {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle, transparent 5%, rgba(0,0,0,0.9) 100%);
-            z-index: 2; pointer-events: none;
+            background: radial-gradient(circle, transparent 5%, rgba(0,0,0,0.95) 100%);
+            z-index: 1; pointer-events: none;
         }
 
         .container { position: relative; z-index: 10; width: 100%; }
+
+        .section-full { 
+            position: relative; 
+            z-index: 10; 
+            min-height: 100vh; 
+            padding: 140px 8%; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            background: rgba(5, 5, 5, 0.2);
+            backdrop-filter: blur(1px);
+        }
 
         /* --- MARQUEE (Animated Rows) --- */
         .marquee-wrapper { 
@@ -66,7 +78,7 @@
             width: 200px; height: 200px;
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid var(--gold);
+            border: 1px solid var(--gold);
             filter: grayscale(1);
             margin-bottom: 20px;
             transition: 0.6s;
@@ -86,10 +98,8 @@
         .review-card p { font-style: italic; font-size: 15px; color: #fff; line-height: 1.8; }
         .review-card span { color: var(--gold); font-size: 11px; letter-spacing: 3px; display: block; margin-top: 20px; text-transform: uppercase; }
 
-        /* --- SECTIONS --- */
-        .section-full { min-height: 100vh; padding: 140px 8%; display: flex; flex-direction: column; justify-content: center; }
-        
-        .hero { height: 100vh; text-align: center; padding-top: 0; }
+        /* --- HERO --- */
+        .hero { height: 100vh; text-align: center; padding-top: 0; background: none; }
         .hero h1 { font-size: clamp(45px, 9vw, 110px); letter-spacing: 18px; text-transform: uppercase; line-height: 1.1; }
         .hero h1 span { display: block; color: var(--gold-dark); font-size: 0.5em; letter-spacing: 12px; }
 
@@ -145,7 +155,7 @@
         .retreat-title h3 { font-size: 24px; letter-spacing: 5px; text-shadow: 0 5px 15px rgba(0,0,0,0.8); color: #fff; }
 
         /* --- CALL TO ACTION & FORM --- */
-        .cta-section { background: linear-gradient(to bottom, var(--black), #0a0000); padding: 150px 8%; text-align: center; }
+        .cta-section { background: linear-gradient(to bottom, var(--black), #0a0000); padding: 150px 8%; text-align: center; position: relative; z-index: 10; }
         .form-container { max-width: 700px; margin: 80px auto 0; }
         
         .cta-title { font-size: 64px; margin-bottom: 30px; }
@@ -167,7 +177,7 @@
         .btn-submit:hover { background: var(--white); transform: scale(1.02); box-shadow: 0 0 50px rgba(197, 160, 89, 0.4); }
 
         /* --- FOOTER --- */
-        footer { padding: 100px 0 60px; text-align: center; border-top: 1px solid rgba(255,255,255,0.03); }
+        footer { padding: 100px 0 60px; text-align: center; border-top: 1px solid rgba(255,255,255,0.03); position: relative; z-index: 10; background: var(--black); }
         .footer-logo { font-size: 18px; letter-spacing: 10px; margin-bottom: 30px; display: block; }
 
         /* --- MOBILE ADAPTATION --- */
@@ -201,7 +211,7 @@
         <div class="container">
             <nav style="display: flex; justify-content: space-between; align-items: center; padding: 0 5%;">
                 <a href="#" class="logo">Manus<span>Dominus</span></a>
-                <a href="#booking" class="btn-portal" style="padding: 12px 25px; border: 1px solid var(--gold); color: var(--gold); text-decoration: none; font-size: 10px; letter-spacing: 2px;">Записаться</a>
+                <a href="#booking" style="padding: 12px 25px; border: 1px solid var(--gold); color: var(--gold); text-decoration: none; font-size: 10px; letter-spacing: 2px;">Записаться</a>
             </nav>
         </div>
     </header>
@@ -259,7 +269,7 @@
                 <div class="review-card"><p>"Он увидел мою аварию за год. Я не верила. Теперь я здесь, чтобы сказать спасибо за жизнь."</p><span>— Светлана В.</span></div>
                 <div class="review-card"><p>"Курс обучения перевернул мое сознание. Дмитрий — жесткий, но гениальный учитель."</p><span>— Михаил Р.</span></div>
                 <div class="review-card"><p>"Премиальный подход. Никакой воды, только факты из вашего будущего."</p><span>— Игорь Т.</span></div>
-                <div class="review-card"><p>"Я нашел свое призвание. Линии на руках больше не загадка, а четкий план действий."</p><span>— Алексей К.</span></div>
+                <div class="review-card"><p>"Я нашла свое призвание. Линии на руках больше не загадка, а четкий план действий."</p><span>— Алексей К.</span></div>
                 <div class="review-card"><p>"Мурашки по коже от первой минуты сеанса. Он знает всё о моих скрытых талантах."</p><span>— Елена Д.</span></div>
                 <div class="review-card"><p>"Точность 100%. Это пугает и восхищает одновременно. Лучший хиромант в стране."</p><span>— Кристина П.</span></div>
                 <div class="review-card"><p>"Лучшая инвестиция в себя — ретрит безмолвия. Нашла ответы на все вопросы."</p><span>— Ольга Ш.</span></div>
@@ -338,36 +348,40 @@
         const runeGroup = new THREE.Group();
         const loader = new THREE.TextureLoader();
         const woodTexture = loader.load('https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=600&q=80');
-        const geometry = new THREE.CylinderGeometry(1, 1, 0.2, 32);
-        const sideMaterial = new THREE.MeshStandardMaterial({ map: woodTexture, color: 0x443322 });
-        const topMaterial = new THREE.MeshStandardMaterial({ map: woodTexture, color: 0x554433 });
+        const geometry = new THREE.CylinderGeometry(0.6, 0.6, 0.15, 32); // SMALLER
+        const sideMaterial = new THREE.MeshStandardMaterial({ map: woodTexture, color: 0x3d2b1f });
+        const topMaterial = new THREE.MeshStandardMaterial({ map: woodTexture, color: 0x3d2b1f });
         
         const runeCanvas = document.createElement('canvas');
         runeCanvas.width = 512; runeCanvas.height = 512;
         const ctx = runeCanvas.getContext('2d');
-        ctx.fillStyle = '#3d2b1f'; ctx.fillRect(0, 0, 512, 512);
+        ctx.fillStyle = '#2a1b0f'; ctx.fillRect(0, 0, 512, 512);
         ctx.strokeStyle = '#000000'; ctx.lineWidth = 30; ctx.lineCap = 'round';
         ctx.beginPath();
         ctx.moveTo(256, 100); ctx.lineTo(256, 412);
         ctx.moveTo(256, 256); ctx.lineTo(100, 100);
         ctx.moveTo(256, 256); ctx.lineTo(412, 100);
         ctx.stroke();
-        ctx.strokeStyle = '#c5a059'; ctx.lineWidth = 8; ctx.stroke();
+        
+        ctx.strokeStyle = '#d4af37'; ctx.lineWidth = 10; ctx.stroke();
+        ctx.shadowColor = '#d4af37'; ctx.shadowBlur = 20; ctx.stroke();
 
         const runeTexture = new THREE.CanvasTexture(runeCanvas);
-        const runeTopMaterial = new THREE.MeshStandardMaterial({ map: runeTexture, bumpMap: runeTexture, bumpScale: 0.1 });
+        const runeTopMaterial = new THREE.MeshStandardMaterial({ map: runeTexture, bumpMap: runeTexture, bumpScale: 0.15 });
         const stone = new THREE.Mesh(geometry, [sideMaterial, runeTopMaterial, topMaterial]);
         runeGroup.add(stone);
 
-        const light = new THREE.PointLight(0xffffff, 1.5, 100); light.position.set(5, 5, 5); scene.add(light);
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5); scene.add(ambientLight);
+        runeGroup.position.set(1.5, 0, 0); // SIDE POSITION
+
+        const light = new THREE.PointLight(0xffffff, 2, 100); light.position.set(5, 5, 5); scene.add(light);
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.3); scene.add(ambientLight);
         scene.add(runeGroup);
-        camera.position.z = 3;
+        camera.position.z = 4;
 
         function animate() {
             requestAnimationFrame(animate);
-            runeGroup.rotation.y += 0.005;
-            runeGroup.rotation.x = Math.sin(Date.now() * 0.001) * 0.2 + 0.5;
+            runeGroup.rotation.y += 0.003;
+            runeGroup.rotation.x = Math.sin(Date.now() * 0.0005) * 0.3 + 0.4;
             renderer.render(scene, camera);
         }
         animate();
@@ -383,8 +397,8 @@
 
         window.addEventListener('scroll', () => {
             const progress = window.scrollY / (document.body.offsetHeight - window.innerHeight);
-            gsap.to(runeGroup.rotation, { y: progress * 15, duration: 1 });
-            gsap.to(runeGroup.scale, { x: 1 + progress * 0.5, y: 1 + progress * 0.5, z: 1 + progress * 0.5, duration: 1 });
+            gsap.to(runeGroup.position, { y: (progress * 4) - 2, x: 1.5 - (progress * 0.5), duration: 1 });
+            gsap.to(runeGroup.rotation, { y: progress * 10, duration: 1 });
         });
 
         window.addEventListener('resize', () => {
