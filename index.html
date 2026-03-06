@@ -3,301 +3,238 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Центр красоты Елены Кузнецовой | Шик и Совершенство</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Центр красоты Елены Кузнецовой | Чита | Официальный сайт</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Montserrat:wght@200;300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #2c2c2c;
-            --accent: #d4af37;
-            --bg-light: #fdfbf7;
-            --text-main: #333;
-            --text-light: #fff;
-            --soft-rose: #f4e4e1;
+            --bg: #fcfaf7;
+            --text: #2d2d2c;
+            --accent: #b89b72;
+            --white: #ffffff;
+            --soft-shadow: 0 10px 30px rgba(0,0,0,0.05);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background-color: var(--bg-light);
-            color: var(--text-main);
-            line-height: 1.6;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
         }
 
-        h1, h2, h3 {
-            font-family: 'Playfair Display', serif;
-        }
+        h1, h2, h3 { font-family: 'Playfair Display', serif; font-weight: 400; }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
+        .container { max-width: 1300px; margin: 0 auto; padding: 0 40px; }
 
-        /* Header */
-        header {
-            padding: 30px 0;
-            position: absolute;
-            width: 100%;
-            z-index: 100;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-        }
-
+        /* Navigation */
         nav {
+            padding: 30px 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: rgba(252, 250, 247, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(184, 155, 114, 0.1);
         }
 
-        .logo {
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--accent);
-            text-decoration: none;
-            letter-spacing: 1px;
-        }
+        .logo { font-size: 22px; letter-spacing: 2px; text-transform: uppercase; color: var(--text); text-decoration: none; font-weight: 600; }
+        .logo span { color: var(--accent); }
 
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-light);
-            margin-left: 40px;
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            transition: 0.3s;
-        }
+        .nav-links a { text-decoration: none; color: var(--text); margin-left: 30px; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
+        .nav-links a:hover { color: var(--accent); }
 
-        .nav-links a:hover {
-            color: var(--accent);
-        }
-
-        /* Hero */
+        /* Hero Section */
         .hero {
             height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1920&q=80');
-            background-size: cover;
-            background-position: center;
             display: flex;
             align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: var(--text-light);
+            padding-top: 100px;
+            position: relative;
         }
 
-        .hero-content h1 {
-            font-size: 72px;
-            margin-bottom: 20px;
-            font-style: italic;
+        .hero-text { flex: 1; z-index: 2; padding-right: 50px; }
+        .hero-text h1 { font-size: 84px; line-height: 1; margin-bottom: 30px; }
+        .hero-text h1 span { font-style: italic; display: block; font-size: 64px; color: var(--accent); }
+        .hero-text p { font-size: 18px; font-weight: 300; max-width: 500px; margin-bottom: 40px; color: #666; }
+
+        .hero-img {
+            flex: 1;
+            height: 80vh;
+            background: url('https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            border-radius: 300px 300px 0 0;
+            position: relative;
         }
 
-        .hero-content p {
-            font-size: 20px;
-            max-width: 700px;
-            margin: 0 auto 40px;
-            font-weight: 300;
-            letter-spacing: 1px;
+        .hero-img::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: -20px;
+            bottom: -20px;
+            border: 1px solid var(--accent);
+            border-radius: 300px 300px 0 0;
+            z-index: -1;
         }
 
-        .btn {
+        .cta-btn {
             display: inline-block;
-            padding: 18px 50px;
-            background: var(--accent);
-            color: #000;
+            padding: 20px 45px;
+            background: var(--text);
+            color: var(--white);
             text-decoration: none;
-            font-weight: 600;
             text-transform: uppercase;
+            font-size: 14px;
             letter-spacing: 2px;
             transition: 0.4s;
-            border: 1px solid var(--accent);
         }
+        .cta-btn:hover { background: var(--accent); transform: translateY(-5px); }
 
-        .btn:hover {
-            background: transparent;
-            color: var(--accent);
-        }
+        /* Procedures Section */
+        .section { padding: 120px 0; }
+        .section-header { text-align: center; margin-bottom: 80px; }
+        .section-header h2 { font-size: 52px; margin-bottom: 20px; }
+        .section-header .line { width: 60px; height: 2px; background: var(--accent); margin: 0 auto; }
 
-        /* Services */
-        .section {
-            padding: 120px 0;
-        }
-
-        .section-title {
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .card {
+            background: var(--white);
+            padding: 60px 40px;
             text-align: center;
-            margin-bottom: 80px;
-        }
-
-        .section-title h2 {
-            font-size: 48px;
-            margin-bottom: 15px;
-        }
-
-        .section-title .divider {
-            width: 80px;
-            height: 2px;
-            background: var(--accent);
-            margin: 0 auto;
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 40px;
-        }
-
-        .service-card {
-            background: #fff;
-            padding: 50px;
-            border: 1px solid var(--soft-rose);
+            border-radius: 5px;
             transition: 0.5s;
-            text-align: center;
+            box-shadow: var(--soft-shadow);
         }
-
-        .service-card:hover {
-            border-color: var(--accent);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
-        }
-
-        .service-card h3 {
-            font-size: 28px;
-            margin-bottom: 20px;
-            color: var(--primary);
-        }
+        .card:hover { transform: translateY(-15px); }
+        .card h3 { font-size: 26px; margin-bottom: 20px; color: var(--accent); }
+        .card p { font-size: 15px; color: #777; font-weight: 300; }
 
         /* Before After */
-        .ba-section {
-            background-color: #f9f4f2;
-        }
+        .ba-wrapper { background: #f4f1ed; padding: 100px 0; }
+        .ba-container { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+        .ba-images { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .ba-images img { width: 100%; border-radius: 10px; box-shadow: var(--soft-shadow); }
+        .ba-info h2 { font-size: 48px; margin-bottom: 25px; }
 
-        .ba-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-top: 50px;
-        }
+        /* Contact & Info */
+        .contact-box { background: var(--text); color: var(--white); padding: 80px; text-align: center; margin-top: 50px; }
+        .contact-box h2 { font-size: 42px; margin-bottom: 30px; }
+        .contact-details { font-size: 20px; font-weight: 200; letter-spacing: 1px; }
+        .contact-details span { color: var(--accent); display: block; margin-top: 10px; font-weight: 400; }
 
-        .ba-item {
-            position: relative;
-            overflow: hidden;
-        }
+        footer { padding: 60px 0; text-align: center; font-size: 12px; text-transform: uppercase; letter-spacing: 2px; color: #999; }
 
-        .ba-item img {
-            width: 100%;
-            display: block;
-            filter: grayscale(20%);
-        }
+        /* Animations */
+        [data-aos] { opacity: 0; transform: translateY(30px); transition: 1s; }
+        .visible { opacity: 1 !important; transform: translateY(0) !important; }
 
-        .ba-label {
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            background: rgba(255,255,255,0.8);
-            padding: 5px 15px;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* Footer */
-        footer {
-            background: var(--primary);
-            padding: 80px 0;
-            color: #aaa;
-            text-align: center;
-        }
-
-        .footer-logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 32px;
-            color: var(--accent);
-            margin-bottom: 30px;
-            display: block;
-        }
-
-        @media (max-width: 768px) {
-            .hero-content h1 { font-size: 42px; }
-            .ba-grid { grid-template-columns: 1fr; }
-            .nav-links { display: none; }
+        @media (max-width: 992px) {
+            .hero { flex-direction: column; text-align: center; height: auto; }
+            .hero-text { padding-right: 0; margin-bottom: 60px; }
+            .hero-text h1 { font-size: 54px; }
+            .ba-container { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="container">
-            <nav>
-                <a href="#" class="logo">Елена Кузнецова</a>
-                <div class="nav-links">
-                    <a href="#services">Услуги</a>
-                    <a href="#gallery">Галерея</a>
-                    <a href="#contact">Запись</a>
-                </div>
-            </nav>
+    <nav>
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+            <a href="#" class="logo">Elena <span>Kuznetsova</span></a>
+            <div class="nav-links">
+                <a href="#services">Процедуры</a>
+                <a href="#results">Результаты</a>
+                <a href="#contacts">Контакты</a>
+            </div>
         </div>
-    </header>
+    </nav>
 
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Искусство Красоты</h1>
-            <p>Центр красоты Елены Кузнецовой — место, где ваша индивидуальность превращается в шедевр</p>
-            <a href="#contact" class="btn">Записаться на визит</a>
+    <section class="hero container">
+        <div class="hero-text" data-aos>
+            <h1>Истинная <span>красота</span> вне времени</h1>
+            <p>Центр красоты Елены Кузнецовой в Чите — это высший стандарт эстетической медицины и косметологии.</p>
+            <a href="#contacts" class="cta-btn">Записаться онлайн</a>
         </div>
+        <div class="hero-img" data-aos></div>
     </section>
 
-    <section id="services" class="section">
-        <div class="container">
-            <div class="section-title">
-                <h2>Наши направления</h2>
-                <div class="divider"></div>
-            </div>
-            <div class="services-grid">
-                <div class="service-card">
-                    <h3>Косметология</h3>
-                    <p>Инновационные методики омоложения и ухода за кожей лица, возвращающие сияние и тонус.</p>
-                </div>
-                <div class="service-card">
-                    <h3>Стилистика</h3>
-                    <p>Создание неповторимого образа: от классической стрижки до авангардного окрашивания.</p>
-                </div>
-                <div class="service-card">
-                    <h3>Nail-Сервис</h3>
-                    <p>Безупречный маникюр и педикюр с использованием премиальных материалов.</p>
-                </div>
-            </div>
+    <section id="services" class="section container">
+        <div class="section-header" data-aos>
+            <h2>Направления преображения</h2>
+            <div class="line"></div>
         </div>
-    </section>
-
-    <section id="gallery" class="section ba-section">
-        <div class="container">
-            <div class="section-title">
-                <h2>Преображение</h2>
-                <p>Результаты, которыми мы гордимся</p>
-                <div class="divider" style="margin-top: 15px;"></div>
+        <div class="grid">
+            <div class="card" data-aos>
+                <h3>Инъекции</h3>
+                <p>Контурная пластика, биоревитализация и мезотерапия — подчеркните естественные черты лица.</p>
             </div>
-            
-            <div class="ba-grid">
-                <div class="ba-item">
-                    <img src="https://images.unsplash.com/photo-1522337360788-8b13df772ce1?auto=format&fit=crop&w=800&q=80" alt="До">
-                    <div class="ba-label">До</div>
-                </div>
-                <div class="ba-item">
-                    <img src="https://images.unsplash.com/photo-1560869713-7d0a29430803?auto=format&fit=crop&w=800&q=80" alt="После">
-                    <div class="ba-label">После</div>
-                </div>
+            <div class="card" data-aos>
+                <h3>Аппаратный уход</h3>
+                <p>Инновационные системы SMAS-лифтинга и лазерного омоложения для безупречной кожи.</p>
+            </div>
+            <div class="card" data-aos>
+                <h3>Чистки и пилинги</h3>
+                <p>Глубокое очищение и обновление кожи с использованием профессиональных составов.</p>
+            </div>
+            <div class="card" data-aos>
+                <h3>Массаж лица</h3>
+                <p>Скульптурные и буккальные техники для восстановления тонуса и овала лица.</p>
             </div>
         </div>
     </section>
 
-    <footer id="contact">
+    <section id="results" class="ba-wrapper">
+        <div class="container ba-container">
+            <div class="ba-images" data-aos>
+                <img src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&w=600&q=80" alt="До">
+                <img src="https://images.unsplash.com/photo-1522337360788-8b13df772ce1?auto=format&fit=crop&w=600&q=80" alt="После">
+            </div>
+            <div class="ba-info" data-aos>
+                <h2>Сила <br><span>преображения</span></h2>
+                <p>Мы верим в естественный результат. Наши методики позволяют достичь видимых изменений, сохраняя вашу индивидуальность и живую мимику.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contacts" class="container" style="margin-bottom: -100px; position: relative; z-index: 10;">
+        <div class="contact-box" data-aos>
+            <h2>Ждем вас в центре</h2>
+            <div class="contact-details">
+                Чита, ул. Балябина, 16
+                <span>+7 (999) 685-87-81</span>
+            </div>
+            <br>
+            <p style="font-size: 14px; opacity: 0.6;">Ежедневно с 10:00 до 20:00</p>
+        </div>
+    </section>
+
+    <footer style="background: #f0ede9;">
         <div class="container">
-            <span class="footer-logo">Центр красоты Елены Кузнецовой</span>
-            <p style="margin-bottom: 20px;">Москва, ул. Пречистенка, 12 | +7 (999) 000-00-00</p>
-            <p>&copy; 2026 Все права защищены. Дизайн от Milana Artist 🎨</p>
+            <p>© 2026 Центр красоты Елены Кузнецовой. All rights reserved.</p>
+            <p style="margin-top: 10px; font-size: 10px;">Design by Milana Artist 🎨</p>
         </div>
     </footer>
 
+    <script>
+        // Simple Scroll Reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('[data-aos]').forEach(el => observer.observe(el));
+    </script>
 </body>
 </html>
