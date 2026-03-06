@@ -45,7 +45,7 @@
             left: 0;
             width: 100%;
             z-index: 1000;
-            background: rgba(253, 250, 247, 0.9);
+            background: rgba(253, 250, 247, 0.95);
             backdrop-filter: blur(15px);
             border-bottom: 1px solid rgba(197, 160, 89, 0.1);
             padding: 20px 0;
@@ -64,7 +64,6 @@
             letter-spacing: 3px;
             color: var(--text-dark);
             text-decoration: none;
-            position: relative;
         }
 
         .logo span { color: var(--gold); font-weight: 700; }
@@ -88,7 +87,7 @@
             min-height: 100vh;
             display: flex;
             align-items: center;
-            padding-top: 140px; /* Increased padding to prevent header overlap */
+            padding-top: 140px;
             padding-bottom: 80px;
             background: #fff;
         }
@@ -98,7 +97,6 @@
             grid-template-columns: 1.2fr 1fr;
             align-items: center;
             gap: 60px;
-            height: 100%;
         }
 
         .hero-content { opacity: 0; transform: translateX(-50px); animation: fadeIn 1.2s forwards 0.5s; }
@@ -115,13 +113,13 @@
             border-radius: 50px;
         }
 
-        .hero h1 { font-size: clamp(48px, 8vw, 96px); line-height: 0.9; margin-bottom: 30px; }
+        .hero h1 { font-size: clamp(42px, 7vw, 84px); line-height: 1; margin-bottom: 30px; }
         .hero h1 span { display: block; font-style: italic; color: var(--gold); font-weight: 400; }
         
         .hero p { font-size: 18px; font-weight: 300; color: var(--text-muted); max-width: 500px; margin-bottom: 40px; }
 
-        .cta-group { display: flex; align-items: center; gap: 30px; }
         .btn-main {
+            display: inline-block;
             padding: 22px 45px;
             background: var(--text-dark);
             color: var(--white);
@@ -135,7 +133,7 @@
 
         .hero-image-wrapper {
             position: relative;
-            height: 85%;
+            height: 600px;
             opacity: 0; transform: scale(0.9); animation: zoomIn 1.5s forwards;
         }
 
@@ -143,165 +141,145 @@
             width: 100%;
             height: 100%;
             background: url('https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=1200&q=80') center/cover;
-            border-radius: 400px 400px 0 0;
-            box-shadow: 30px 30px 0px var(--gold);
+            border-radius: 300px 300px 0 0;
+            box-shadow: 20px 20px 0px var(--gold);
         }
 
-        /* --- STATS BAR --- */
-        .stats-bar {
-            padding: 60px 0;
-            background: var(--white);
-            border-bottom: 1px solid #eee;
-        }
-        .stats-grid { display: flex; justify-content: space-around; text-align: center; }
-        .stat-item h4 { font-size: 32px; color: var(--gold); }
-        .stat-item p { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); }
+        /* --- STATS --- */
+        .stats-bar { padding: 60px 0; background: var(--white); border-bottom: 1px solid #eee; }
+        .stats-grid { display: flex; justify-content: space-around; text-align: center; flex-wrap: wrap; gap: 30px; }
+        .stat-item h4 { font-size: 32px; color: var(--gold); margin-bottom: 5px; }
+        .stat-item p { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); }
 
         /* --- SERVICES --- */
-        .section { padding: 140px 0; }
-        .section-title { margin-bottom: 80px; }
-        .section-title span { color: var(--gold); text-transform: uppercase; font-size: 12px; letter-spacing: 4px; display: block; margin-bottom: 10px; }
-        .section-title h2 { font-size: 52px; }
+        .section { padding: 120px 0; }
+        .section-title { margin-bottom: 80px; text-align: left; }
+        .section-title span { color: var(--gold); text-transform: uppercase; font-size: 11px; letter-spacing: 4px; display: block; margin-bottom: 15px; }
+        .section-title h2 { font-size: 48px; line-height: 1.1; }
 
         .services-list {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2px;
             background: #eee;
-            border: 1px solid #eee;
         }
 
         .service-card {
             background: var(--white);
-            padding: 80px 50px;
+            padding: 60px 40px;
             transition: var(--transition);
             position: relative;
-            overflow: hidden;
         }
+        .service-card:hover { transform: translateY(-10px); z-index: 2; box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
+        .service-number { font-size: 12px; color: var(--gold); margin-bottom: 25px; display: block; font-weight: 600; }
+        .service-card h3 { font-size: 24px; margin-bottom: 15px; }
+        .service-card p { font-size: 14px; color: var(--text-muted); font-weight: 300; }
 
-        .service-card::before {
-            content: '';
-            position: absolute;
-            bottom: 0; left: 0; width: 100%; height: 0;
-            background: var(--gold);
-            transition: var(--transition);
-            z-index: 0;
-            opacity: 0.05;
-        }
-
-        .service-card:hover::before { height: 100%; }
-        .service-card:hover { transform: translateY(-10px); }
-
-        .service-number { font-size: 14px; color: var(--gold); margin-bottom: 30px; display: block; }
-        .service-card h3 { font-size: 28px; margin-bottom: 20px; z-index: 1; position: relative; }
-        .service-card p { font-size: 15px; color: var(--text-muted); font-weight: 300; z-index: 1; position: relative; }
-
-        /* --- BEFORE AFTER --- */
-        .ba-section { background: var(--bg-dark); color: var(--white); overflow: hidden; }
-        .ba-section .section-title span { color: var(--gold-light); }
+        /* --- BEFORE AFTER SLIDER --- */
+        .ba-section { background: var(--bg-dark); color: var(--white); }
+        .ba-container { display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: center; }
         
-        .ba-container {
-            display: grid;
-            grid-template-columns: 1fr 1.5fr;
-            gap: 60px;
-            align-items: center;
-        }
-
         .ba-viewer {
             position: relative;
             width: 100%;
-            height: 600px;
+            height: 550px;
             overflow: hidden;
-            border-radius: 5px;
+            border-radius: 4px;
             cursor: ew-resize;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
             touch-action: none;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
         }
 
         .ba-image {
             position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background-size: cover;
             background-position: center;
             pointer-events: none;
         }
 
-        .img-before { 
-            background-image: url('https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&w=1200&q=80'); 
-        }
+        /* SIMULATED BEFORE/AFTER WITH SAME IMAGE + FILTER */
         .img-after { 
-            background-image: url('https://images.unsplash.com/photo-1522337360788-8b13df772ce1?auto=format&fit=crop&w=1200&q=80');
+            background-image: url('https://images.unsplash.com/photo-1522337360788-8b13df772ce1?auto=format&fit=crop&w=1200&q=80'); 
+            z-index: 1;
+        }
+        .img-before { 
+            background-image: url('https://images.unsplash.com/photo-1522337360788-8b13df772ce1?auto=format&fit=crop&w=1200&q=80'); 
+            filter: grayscale(0.8) contrast(1.2) brightness(0.9); /* Simulating "Before" state */
             width: 50%;
-            border-right: 3px solid var(--gold);
+            border-right: 2px solid var(--gold);
             z-index: 2;
+        }
+
+        .slider-handle {
+            position: absolute;
+            top: 0; bottom: 0; left: 50%;
+            width: 2px;
+            background: var(--gold);
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        .slider-button {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 44px; height: 44px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: #000; font-weight: 900;
+            border: 4px solid var(--bg-dark);
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
         }
 
         .ba-label {
             position: absolute;
-            bottom: 30px;
-            padding: 10px 20px;
+            bottom: 20px;
+            padding: 6px 12px;
             background: rgba(0,0,0,0.7);
             font-size: 10px;
             text-transform: uppercase;
             letter-spacing: 2px;
             z-index: 10;
-            pointer-events: none;
         }
-        .label-before { right: 30px; }
-        .label-after { left: 30px; }
-
-        .slider-handle {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 40px;
-            height: 40px;
-            background: var(--gold);
-            border-radius: 50%;
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #000;
-            font-weight: 900;
-            box-shadow: 0 0 20px rgba(0,0,0,0.3);
-            pointer-events: none;
-        }
+        .label-before { left: 20px; }
+        .label-after { right: 20px; }
 
         /* --- CONTACT --- */
-        .contact-grid {
-            display: grid;
-            grid-template-columns: 1fr 1.5fr;
-            gap: 80px;
+        .contact-card {
             background: var(--white);
-            padding: 100px;
-            margin-top: -100px;
+            padding: 80px;
+            margin-top: -80px;
             position: relative;
-            z-index: 10;
-            box-shadow: 0 50px 100px rgba(0,0,0,0.1);
+            z-index: 20;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.08);
         }
+        .contact-info h2 { font-size: 42px; margin-bottom: 30px; }
+        .info-block { margin-bottom: 25px; }
+        .info-block h6 { color: var(--gold); text-transform: uppercase; font-size: 10px; letter-spacing: 2px; margin-bottom: 5px; }
+        .info-block p { font-size: 18px; }
 
-        .contact-info h2 { font-size: 48px; margin-bottom: 40px; }
-        .info-item { margin-bottom: 30px; }
-        .info-item h5 { text-transform: uppercase; font-size: 11px; letter-spacing: 2px; color: var(--gold); margin-bottom: 5px; }
-        .info-item p { font-size: 18px; font-weight: 400; }
+        footer { padding: 100px 0 40px; text-align: center; }
+        .footer-text { font-size: 10px; text-transform: uppercase; letter-spacing: 3px; color: #999; }
 
         /* --- ANIMATIONS --- */
         @keyframes fadeIn { to { opacity: 1; transform: translateX(0); } }
         @keyframes zoomIn { to { opacity: 1; transform: scale(1); } }
-
-        [data-scroll] { opacity: 0; transform: translateY(40px); transition: var(--transition); }
+        [data-scroll] { opacity: 0; transform: translateY(30px); transition: var(--transition); }
         .is-visible { opacity: 1; transform: translateY(0); }
 
         /* --- MOBILE --- */
         @media (max-width: 992px) {
-            .hero-grid, .ba-container, .contact-grid { grid-template-columns: 1fr; }
-            .hero { height: auto; padding-bottom: 100px; }
-            .hero-image-wrapper { height: 500px; order: -1; }
-            .contact-grid { padding: 40px; margin-top: 0; }
+            .hero-grid, .ba-container, .contact-card { grid-template-columns: 1fr; }
+            .hero { padding-top: 120px; }
+            .hero-image-wrapper { height: 450px; order: -1; }
+            .contact-card { padding: 40px; margin-top: 0; }
             .nav-links { display: none; }
+            .ba-viewer { height: 400px; }
         }
     </style>
 </head>
@@ -312,7 +290,6 @@
             <nav>
                 <a href="#" class="logo">Elena <span>Kuznetsova</span></a>
                 <ul class="nav-links">
-                    <li><a href="#about">О центре</a></li>
                     <li><a href="#services">Процедуры</a></li>
                     <li><a href="#results">Результаты</a></li>
                     <li><a href="#contact">Контакты</a></li>
@@ -321,16 +298,14 @@
         </div>
     </header>
 
-    <section class="hero" id="about">
+    <section class="hero">
         <div class="container">
             <div class="hero-grid">
                 <div class="hero-content">
-                    <span class="badge">Professional Esthetics</span>
-                    <h1>Сияние <span>вашей кожи</span></h1>
-                    <p>Центр красоты Елены Кузнецовой — это сочетание передовых медицинских технологий и эстетического совершенства в самом сердце Читы.</p>
-                    <div class="cta-group">
-                        <a href="#contact" class="btn-main">Записаться</a>
-                    </div>
+                    <span class="badge">Чита • Балябина, 16</span>
+                    <h1>Безупречность <span>в каждой линии</span></h1>
+                    <p>Центр красоты Елены Кузнецовой — премиальные стандарты эстетики и заботы о вашей молодости.</p>
+                    <a href="#contact" class="btn-main">Записаться</a>
                 </div>
                 <div class="hero-image-wrapper">
                     <div class="hero-img"></div>
@@ -341,48 +316,38 @@
 
     <div class="stats-bar">
         <div class="container stats-grid">
-            <div class="stat-item">
-                <h4>4.9</h4>
-                <p>Рейтинг в 2ГИС</p>
-            </div>
-            <div class="stat-item">
-                <h4>15+</h4>
-                <p>Лет опыта</p>
-            </div>
-            <div class="stat-item">
-                <h4>1000+</h4>
-                <p>Довольных клиентов</p>
-            </div>
+            <div class="stat-item"><h4>4.9</h4><p>Рейтинг 2ГИС</p></div>
+            <div class="stat-item"><h4>87</h4><p>Отзывов</p></div>
+            <div class="stat-item"><h4>15+</h4><p>Лет опыта</p></div>
+            <div class="stat-item"><h4>100%</h4><p>Результат</p></div>
         </div>
     </div>
 
-    <section class="section" id="services">
-        <div class="container">
-            <div class="section-title" data-scroll>
-                <span>The Art of Face</span>
-                <h2>Направления ухода</h2>
+    <section class="section container" id="services">
+        <div class="section-title" data-scroll>
+            <span>Our Expertise</span>
+            <h2>Искусство <br>преображения</h2>
+        </div>
+        <div class="services-list">
+            <div class="service-card" data-scroll>
+                <span class="service-number">01</span>
+                <h3>Инъекции</h3>
+                <p>Контурная пластика и биоревитализация препаратами мировых брендов.</p>
             </div>
-            <div class="services-list">
-                <div class="service-card" data-scroll>
-                    <span class="service-number">01</span>
-                    <h3>Инъекции</h3>
-                    <p>Контурная пластика, биоревитализация и мезотерапия — подчеркните естественные черты лица без хирургического вмешательства.</p>
-                </div>
-                <div class="service-card" data-scroll>
-                    <span class="service-number">02</span>
-                    <h3>SMAS-лифтинг</h3>
-                    <p>Безоперационная подтяжка лица на аппаратах экспертного класса. Мгновенный и нарастающий эффект омоложения.</p>
-                </div>
-                <div class="service-card" data-scroll>
-                    <span class="service-number">03</span>
-                    <h3>Озонотерапия</h3>
-                    <p>Уникальные методики оздоровления кожи и тканей на клеточном уровне. Насыщение кислородом и детокс.</p>
-                </div>
-                <div class="service-card" data-scroll>
-                    <span class="service-number">04</span>
-                    <h3>Пилинги</h3>
-                    <p>Профессиональное обновление кожи: от деликатных фруктовых до глубоких терапевтических составов.</p>
-                </div>
+            <div class="service-card" data-scroll>
+                <span class="service-number">02</span>
+                <h3>SMAS-лифтинг</h3>
+                <p>Аппаратная подтяжка лица с мгновенным эффектом омоложения.</p>
+            </div>
+            <div class="service-card" data-scroll>
+                <span class="service-number">03</span>
+                <h3>Озонотерапия</h3>
+                <p>Клеточное оздоровление и насыщение кожи кислородом.</p>
+            </div>
+            <div class="service-card" data-scroll>
+                <span class="service-number">04</span>
+                <h3>Массаж</h3>
+                <p>Скульптурные техники для идеального овала лица.</p>
             </div>
         </div>
     </section>
@@ -392,106 +357,79 @@
             <div class="ba-container">
                 <div class="ba-info" data-scroll>
                     <div class="section-title">
-                        <span>Transformations</span>
-                        <h2 style="color: white">Магия преображения</h2>
+                        <span>Real Results</span>
+                        <h2 style="color:white">Магия взгляда</h2>
                     </div>
-                    <p style="font-weight: 200; opacity: 0.8; margin-bottom: 30px;">
-                        Мы не меняем лица — мы возвращаем им естественную молодость и свежесть. Посмотрите на результат одной из наших комплексных программ.
+                    <p style="font-weight:200; opacity:0.7; margin-bottom:35px;">
+                        Мы используем технику идентичной съемки, чтобы вы могли оценить реальный результат процедуры. Потяните за ползунок, чтобы увидеть изменения.
                     </p>
-                    <a href="#contact" class="btn-main" style="color: white; border: 1px solid rgba(255,255,255,0.2); background: transparent;">Хочу такой результат</a>
+                    <a href="#contact" class="btn-main" style="background:transparent; border:1px solid var(--gold); color:var(--gold);">Записаться на консультацию</a>
                 </div>
-                <div class="ba-viewer" id="ba-slider">
-                    <div class="ba-image img-before"></div>
-                    <div class="ba-image img-after" id="after-img"></div>
-                    <div class="slider-handle">↔</div>
-                    <div class="ba-label label-before">После</div>
-                    <div class="ba-label label-after">До</div>
+                <div class="ba-viewer" id="slider-root">
+                    <div class="ba-image img-after"></div>
+                    <div class="ba-image img-before" id="before-layer"></div>
+                    <div class="slider-handle" id="handle">
+                        <div class="slider-button">↔</div>
+                    </div>
+                    <div class="ba-label label-before">До</div>
+                    <div class="ba-label label-after">После</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="section" id="contact" style="background: #f9f9f9;">
+    <section class="section" id="contact" style="background:#f4f4f4">
         <div class="container">
-            <div class="contact-grid" data-scroll>
+            <div class="contact-card" data-scroll>
                 <div class="contact-info">
-                    <h2>Свяжитесь <br>с нами</h2>
-                    <div class="info-item">
-                        <h5>Адрес</h5>
-                        <p>Чита, ул. Балябина, 16</p>
-                    </div>
-                    <div class="info-item">
-                        <h5>Телефон</h5>
-                        <p>+7 (999) 685-87-81</p>
-                    </div>
-                    <div class="info-item">
-                        <h5>Часы работы</h5>
-                        <p>Ежедневно: 09:00 — 21:00</p>
-                    </div>
+                    <h2>Мы ждем <br>именно вас</h2>
+                    <div class="info-block"><h6>Локация</h6><p>Чита, ул. Балябина, 16</p></div>
+                    <div class="info-block"><h6>Связь</h6><p>+7 (999) 685-87-81</p></div>
+                    <div class="info-block"><h6>График</h6><p>09:00 — 21:00 ежедневно</p></div>
                 </div>
-                <div class="contact-map">
-                    <!-- Placeholder for Map/Logo -->
-                    <div style="width: 100%; height: 100%; background: #f0f0f0; display: flex; align-items: center; justify-content: center; border-radius: 5px;">
-                        <span style="font-family: 'Playfair Display'; font-size: 48px; color: #ccc; text-transform: uppercase; letter-spacing: 5px;">EK Beauty</span>
-                    </div>
+                <div style="background:#eee; display:flex; align-items:center; justify-content:center; border-radius:4px;">
+                    <span style="font-family:'Playfair Display'; font-size:48px; color:#ccc; letter-spacing:10px;">EK</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer style="padding: 100px 0 50px;">
-        <div class="container" style="text-align: center;">
-            <p style="font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #999;">
-                &copy; 2026 Центр красоты Елены Кузнецовой. Официальный сайт.
-            </p>
-            <p style="margin-top: 15px; font-size: 9px; opacity: 0.5;">Designed with passion by Milana Artist 🎨</p>
+    <footer>
+        <div class="container">
+            <p class="footer-text">&copy; 2026 Центр красоты Елены Кузнецовой. Официальный сайт.</p>
+            <p style="margin-top:15px; font-size:9px; color:#bbb;">Designed by Milana Artist 🎨</p>
         </div>
     </footer>
 
     <script>
-        // Scroll Animation
-        const scrollObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                }
-            });
-        }, { threshold: 0.1 });
+        // Scroll Reveal
+        const obs = new IntersectionObserver((es) => {
+            es.forEach(e => { if(e.isIntersecting) e.target.classList.add('is-visible'); });
+        }, {threshold: 0.1});
+        document.querySelectorAll('[data-scroll]').forEach(el => obs.observe(el));
 
-        document.querySelectorAll('[data-scroll]').forEach(el => scrollObserver.observe(el));
+        // Pro Slider
+        const root = document.getElementById('slider-root');
+        const before = document.getElementById('before-layer');
+        const handle = document.getElementById('handle');
 
-        // Interactive Before/After Slider
-        const baContainer = document.getElementById('ba-slider');
-        const afterImg = document.getElementById('after-img');
-        const handle = document.querySelector('.slider-handle');
-
-        const moveSlider = (e) => {
-            const rect = baContainer.getBoundingClientRect();
-            let x = (e.clientX || (e.touches && e.touches[0].clientX)) - rect.left;
-            
-            if (x < 0) x = 0;
-            if (x > rect.width) x = rect.width;
-            
-            const percent = (x / rect.width) * 100;
-            afterImg.style.width = percent + '%';
-            handle.style.left = percent + '%';
+        const drag = (e) => {
+            const r = root.getBoundingClientRect();
+            let x = (e.clientX || (e.touches && e.touches[0].clientX)) - r.left;
+            x = Math.max(0, Math.min(x, r.width));
+            const p = (x / r.width) * 100;
+            before.style.width = p + '%';
+            handle.style.left = p + '%';
         };
 
-        baContainer.addEventListener('mousemove', moveSlider);
-        baContainer.addEventListener('touchmove', moveSlider);
+        root.addEventListener('mousemove', drag);
+        root.addEventListener('touchmove', drag);
 
-        // Header scroll effect
+        // Header Style
         window.addEventListener('scroll', () => {
-            const header = document.getElementById('header');
-            if (window.scrollY > 50) {
-                header.style.padding = '10px 0';
-                header.style.background = 'rgba(253, 250, 247, 0.98)';
-                header.style.boxShadow = '0 10px 30px rgba(0,0,0,0.05)';
-            } else {
-                header.style.padding = '20px 0';
-                header.style.background = 'rgba(253, 250, 247, 0.9)';
-                header.style.boxShadow = 'none';
-            }
+            const h = document.getElementById('header');
+            h.style.padding = window.scrollY > 50 ? '12px 0' : '20px 0';
+            h.style.boxShadow = window.scrollY > 50 ? '0 10px 30px rgba(0,0,0,0.05)' : 'none';
         });
     </script>
 </body>
