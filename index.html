@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MANUS DOMINUS | Дмитрий — Чтение Судьбы по Ладони</title>
+    <title>MANUS DOMINUS | Дмитрий — Хиромант</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Playfair+Display:ital,wght@0,400;1,400&family=Montserrat:wght@100;300;400;600&display=swap" rel="stylesheet">
     
@@ -60,12 +60,12 @@
             justify-content: center; 
         }
 
-        /* --- FIXED MARQUEE LOGIC --- */
+        /* --- MARQUEE --- */
         .marquee-wrapper { 
             overflow: hidden; 
             white-space: nowrap; 
             width: 100vw;
-            margin-left: calc(-5%); /* offset container padding */
+            margin-left: calc(-5%);
             padding: 60px 0;
             background: rgba(255,255,255,0.01);
             border-top: 1px solid rgba(197, 160, 89, 0.1);
@@ -75,7 +75,7 @@
         .marquee-content { 
             display: flex; 
             gap: 40px; 
-            padding-left: 5%; /* Start from screen edge */
+            padding-left: 5%;
             will-change: transform;
         }
         
@@ -108,20 +108,37 @@
 
         /* --- HERO --- */
         .hero { height: 100vh; text-align: center; padding-top: 0; }
-        .hero h1 { font-size: clamp(45px, 9vw, 110px); letter-spacing: 18px; text-transform: uppercase; line-height: 1.1; }
-        .hero h1 span { display: block; color: var(--gold-dark); font-size: 0.5em; letter-spacing: 12px; }
+        .hero h1 { font-size: clamp(38px, 8vw, 100px); letter-spacing: 12px; text-transform: uppercase; line-height: 1.1; margin-bottom: 20px; }
+        .hero h1 span { display: block; color: var(--gold-dark); font-size: 0.5em; letter-spacing: 8px; }
 
-        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: center; }
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
         .master-img { 
-            height: 700px; 
+            height: 650px; 
             background: url('master_with_snake.jpg') center/cover; 
             border: 1px solid var(--gold);
             position: relative;
         }
         .master-img::after {
-            content: ''; position: absolute; top: 20px; left: 20px; right: -20px; bottom: -20px;
+            content: ''; position: absolute; top: 15px; left: 15px; right: -15px; bottom: -15px;
             border: 1px solid var(--gold-dark); z-index: -1; opacity: 0.5;
         }
+
+        .master-info h2 { font-size: 42px; line-height: 1.2; margin-bottom: 30px; }
+        .master-info p { font-size: 16px; font-weight: 300; opacity: 0.8; margin-bottom: 25px; }
+
+        /* --- FAQ --- */
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2px;
+            background: #111;
+        }
+        .faq-item {
+            background: var(--black);
+            padding: 40px;
+            transition: 0.5s;
+        }
+        .faq-item h3 { font-size: 18px; margin-bottom: 15px; }
 
         /* --- RETREATS --- */
         .retreats-grid {
@@ -130,36 +147,46 @@
             gap: 15px;
         }
         .retreat-card {
-            height: 400px;
+            height: 350px;
             position: relative;
             overflow: hidden;
             border: 1px solid #1a1a1a;
         }
-        .retreat-card img { width: 100%; height: 100%; object-fit: cover; transition: 1.5s; filter: brightness(0.5); }
-        .retreat-card:hover img { transform: scale(1.1); filter: brightness(1); }
-        .retreat-title { 
-            position: absolute; bottom: 30px; left: 0; width: 100%; text-align: center;
-            padding: 0 20px; z-index: 5;
-        }
-        .retreat-title h3 { font-size: 22px; letter-spacing: 4px; text-shadow: 0 5px 10px rgba(0,0,0,0.9); color: #fff; }
+        .retreat-card img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.5); }
+        .retreat-title { position: absolute; bottom: 20px; left: 0; width: 100%; text-align: center; }
+        .retreat-title h3 { font-size: 18px; letter-spacing: 3px; color: #fff; }
 
+        /* --- FORM --- */
+        .cta-section { background: #080808; padding: 120px 5%; text-align: center; }
+        .cta-title { font-size: 42px; margin-bottom: 20px; }
+        input, textarea {
+            width: 100%; padding: 18px; background: rgba(255,255,255,0.02); 
+            border: 1px solid #222; color: #fff; margin-bottom: 15px;
+            font-family: inherit;
+        }
         .btn-submit {
-            display: inline-block; padding: 25px 50px; background: var(--gold); color: #000;
+            display: inline-block; padding: 20px 45px; background: var(--gold); color: #000;
             text-decoration: none; text-transform: uppercase; font-weight: 900;
-            letter-spacing: 6px; border: none; cursor: pointer; transition: 0.4s;
+            letter-spacing: 4px; border: none; cursor: pointer;
         }
-        .btn-submit:hover { background: #fff; }
 
+        /* --- MOBILE ADAPTATION --- */
         @media (max-width: 1024px) {
-            .about-grid { grid-template-columns: 1fr; gap: 50px; }
-            .hero h1 { font-size: 50px; }
+            .about-grid { grid-template-columns: 1fr; gap: 40px; }
             .retreats-grid { grid-template-columns: repeat(2, 1fr); }
         }
         @media (max-width: 768px) {
+            .section-full { padding: 80px 5%; }
+            .hero h1 { font-size: 42px; letter-spacing: 6px; }
+            .hero h1 span { letter-spacing: 4px; }
+            .master-img { height: 450px; }
+            .marquee-wrapper { padding: 40px 0; }
+            .review-card { width: 280px; padding: 25px; }
+            .review-card p { font-size: 13px; }
+            .avatar-card { width: 180px; }
+            .avatar-card img { width: 120px; height: 120px; }
             .retreats-grid { grid-template-columns: 1fr; }
-            .review-card { width: 320px; }
-            .avatar-card { width: 220px; }
-            .avatar-card img { width: 150px; height: 150px; }
+            .cta-title { font-size: 32px; }
         }
     </style>
 </head>
@@ -172,12 +199,11 @@
         <div class="container">
             <nav style="display: flex; justify-content: space-between; align-items: center; padding: 0 5%;">
                 <a href="#" class="logo">Manus<span>Dominus</span></a>
-                <a href="#booking" style="padding: 10px 20px; border: 1px solid var(--gold); color: var(--gold); text-decoration: none; font-size: 10px; letter-spacing: 2px;">Записаться</a>
+                <a href="#booking" style="padding: 8px 15px; border: 1px solid var(--gold); color: var(--gold); text-decoration: none; font-size: 9px; letter-spacing: 1px;">Записаться</a>
             </nav>
         </div>
     </header>
 
-    <!-- HERO -->
     <section class="section-full hero">
         <div class="container">
             <p data-scroll>Элитная Хиромантия</p>
@@ -185,7 +211,6 @@
         </div>
     </section>
 
-    <!-- ABOUT -->
     <section class="section-full" id="about">
         <div class="container about-grid">
             <div class="master-img" data-scroll></div>
@@ -198,9 +223,8 @@
         </div>
     </section>
 
-    <!-- SUCCESSORS -->
     <section class="section-full" style="padding-left: 0; padding-right: 0;">
-        <div class="container" style="padding-left: 5%;"><h2 style="margin-bottom: 50px; letter-spacing: 8px;">Мои Наследники</h2></div>
+        <div class="container" style="padding-left: 5%;"><h2 style="margin-bottom: 40px; letter-spacing: 6px;">Мои Наследники</h2></div>
         <div class="marquee-wrapper">
             <div class="marquee-content" id="row-students">
                 <div class="avatar-card"><img src="https://i.pravatar.cc/400?img=11" alt=""><h3>Марк</h3><span>Чтец Линий</span></div>
@@ -216,11 +240,11 @@
         </div>
     </section>
 
-    <!-- REVIEWS -->
     <section class="section-full" style="padding-left: 0; padding-right: 0;">
-        <div class="container" style="padding-left: 5%;"><h2 style="margin-bottom: 50px; letter-spacing: 8px;">Отзвуки Судеб</h2></div>
+        <div class="container" style="padding-left: 5%;"><h2 style="margin-bottom: 40px; text-align: right; padding-right: 5%; letter-spacing: 6px;">Отзвуки Судеб</h2></div>
         <div class="marquee-wrapper">
             <div class="marquee-content" id="row-reviews">
+                <!-- 16 FULL REVIEWS -->
                 <div class="review-card"><div class="review-header"><img src="https://i.pravatar.cc/150?u=1" class="review-img"><span>Артем С.</span></div><p>"Дмитрий помог мне выбрать правильное время для запуска бизнеса. Его советы сэкономили мне миллионы."</p></div>
                 <div class="review-card"><div class="review-header"><img src="https://i.pravatar.cc/150?u=2" class="review-img"><span>Мария К.</span></div><p>"Невероятная точность. Он увидел переезд в другую страну, о котором я даже не помышляла. Теперь я в Праге."</p></div>
                 <div class="review-card"><div class="review-header"><img src="https://i.pravatar.cc/150?u=3" class="review-img"><span>Наталья П.</span></div><p>"Приходила к Дмитрию с вопросом о здоровье. Он указал на критические точки, которые подтвердили врачи."</p></div>
@@ -241,7 +265,22 @@
         </div>
     </section>
 
-    <!-- RETREATS -->
+    <section class="section-full container" id="faq">
+        <div class="section-title"><h2>Истина во тьме</h2></div>
+        <div class="faq-grid">
+            <div class="faq-item" data-scroll><h3>Что если я боюсь будущего?</h3><p>Страх — это лишь отсутствие света. Я дам тебе фонарь.</p></div>
+            <div class="faq-item" data-scroll><h3>Можно ли изменить линию?</h3><p>Линии — это не приговор, а русла рек. Течение можно менять.</p></div>
+            <div class="faq-item" data-scroll><h3>Сколько длится сеанс?</h3><p>Вечность, сжатая в 60 минут глубочайшего анализа.</p></div>
+            <div class="faq-item" data-scroll><h3>Это магия или наука?</h3><p>Это психофизиология. Нервы формируют узор на коже.</p></div>
+            <div class="faq-item" data-scroll><h3>Нужно ли личное присутствие?</h3><p>Нет. Качественного фото ладони достаточно для работы.</p></div>
+            <div class="faq-item" data-scroll><h3>С какими вопросами приходят?</h3><p>Бизнес, отношения, предназначение и внутренние тени.</p></div>
+            <div class="faq-item" data-scroll><h3>Что получают ученики?</h3><p>Право видеть мир в четырех измерениях и помогать людям.</p></div>
+            <div class="faq-item" data-scroll><h3>Есть ли гарантии?</h3><p>Твои результаты — моя главная гарантия. Посмотри отзывы.</p></div>
+            <div class="faq-item" data-scroll><h3>Это не опасно?</h3><p>Опасно жить вслепую. Знание — это твоя единственная защита.</p></div>
+            <div class="faq-item" data-scroll><h3>Как попасть на ретрит?</h3><p>Только после личного собеседования. Мы берем не всех.</p></div>
+        </div>
+    </section>
+
     <section class="section-full container">
         <h2 style="margin-bottom: 60px;">Ретриты Безмолвия</h2>
         <div class="retreats-grid">
@@ -254,28 +293,17 @@
         </div>
     </section>
 
-    <!-- BOOKING -->
     <section class="cta-section" id="booking">
         <div class="container">
             <h2 class="cta-title" data-scroll>Зов Судьбы</h2>
             <p style="margin-bottom: 40px; color: var(--gold); letter-spacing: 3px;">Ты всё еще сомневаешься? Будущее не ждет.</p>
             <div class="form-container" data-scroll>
-                <form>
-                    <input type="text" placeholder="Ваше Имя" required>
-                    <input type="tel" placeholder="Ваш Телефон" required>
-                    <textarea rows="4" placeholder="Ваш запрос..."></textarea>
-                    <button type="submit" class="btn-submit">Вскрыть Тайну</button>
-                </form>
+                <form><input type="text" placeholder="Ваше Имя" required><input type="tel" placeholder="Ваш Телефон" required><textarea rows="4" placeholder="Ваш запрос..."></textarea><button type="submit" class="btn-submit">Вскрыть Тайну</button></form>
             </div>
         </div>
     </section>
 
-    <footer>
-        <div class="container">
-            <span class="footer-logo">MANUS DOMINUS</span>
-            <p style="font-size: 10px; opacity: 0.3; letter-spacing: 5px;">© 2026 THE ELITE PALMISTRY. BY MILANA ARTIST 🎨💎</p>
-        </div>
-    </footer>
+    <footer style="background: var(--black);"><div class="container"><span class="footer-logo">MANUS DOMINUS</span><p style="font-size: 10px; opacity: 0.3; letter-spacing: 5px;">© 2026 THE ELITE PALMISTRY. BY MILANA ARTIST 🎨💎</p></div></footer>
 
     <script>
         // --- THREE.JS ENGINE ---
@@ -286,7 +314,7 @@
         document.getElementById('canvas-container').appendChild(renderer.domElement);
 
         const geometry = new THREE.TorusKnotGeometry(2, 0.5, 120, 20);
-        const material = new THREE.MeshBasicMaterial({ color: 0xc5a059, wireframe: true, transparent: true, opacity: 0.15 });
+        const material = new THREE.MeshBasicMaterial({ color: 0xc5a059, wireframe: true, transparent: true, opacity: 0.1 });
         const mesh = new THREE.Mesh(geometry, material);
         scene.add(mesh);
         camera.position.z = 6;
@@ -306,33 +334,16 @@
             gsap.from(el, { scrollTrigger: { trigger: el, start: "top 90%" }, opacity: 0, y: 40, duration: 1.2, ease: "power3.out" });
         });
 
-        // REVIEWS: Start from first card and move
-        gsap.fromTo("#row-reviews", 
-            { x: "0%" }, 
-            {
-                x: "-70%", 
-                scrollTrigger: {
-                    trigger: "#row-reviews",
-                    start: "top bottom",
-                    end: "bottom top",
-                    scrub: 4
-                }
-            }
-        );
+        // MARQUEES: Start from first card and move
+        gsap.fromTo("#row-reviews", { x: "0%" }, {
+            x: "-80%", 
+            scrollTrigger: { trigger: "#row-reviews", start: "top bottom", end: "bottom top", scrub: 5 }
+        });
 
-        // STUDENTS: Start from first card and move
-        gsap.fromTo("#row-students", 
-            { x: "0%" },
-            {
-                x: "-70%",
-                scrollTrigger: {
-                    trigger: "#row-students",
-                    start: "top bottom",
-                    end: "bottom top",
-                    scrub: 4
-                }
-            }
-        );
+        gsap.fromTo("#row-students", { x: "0%" }, {
+            x: "-80%",
+            scrollTrigger: { trigger: "#row-students", start: "top bottom", end: "bottom top", scrub: 5 }
+        });
 
         window.addEventListener('scroll', () => {
             const rot = window.scrollY * 0.0005;
