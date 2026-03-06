@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE HAND | Мастер Судьбы</title>
+    <title>MANUS DOMINUS | Хиромант — Чтение Судьбы по Ладони</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Playfair+Display:ital,wght@0,400;1,400&family=Montserrat:wght@100;300;400;600&display=swap" rel="stylesheet">
     
@@ -18,7 +18,8 @@
             --gold-dark: #8c7647;
             --white: #ffffff;
             --gray: #1a1a1a;
-            --red-tint: rgba(74, 4, 4, 0.3);
+            --blood: #4a0404;
+            --transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -33,7 +34,7 @@
 
         h1, h2, h3 { font-family: 'Cinzel Decorative', cursive; color: var(--gold); }
 
-        /* --- THREE.JS HAND CONTAINER --- */
+        /* --- 3D BACKGROUND --- */
         #canvas-container {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100vh;
@@ -44,111 +45,150 @@
         .overlay-mask {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle, transparent 10%, rgba(0,0,0,0.85) 100%);
+            background: radial-gradient(circle, transparent 5%, rgba(0,0,0,0.9) 100%);
             z-index: 2; pointer-events: none;
         }
 
         .container { position: relative; z-index: 10; width: 100%; }
 
-        /* --- MARQUEE STYLES (Moving blocks) --- */
+        /* --- MARQUEE (Aimated Rows) --- */
         .marquee-wrapper { 
             overflow: hidden; 
             white-space: nowrap; 
-            padding: 40px 0;
-            background: rgba(255,255,255,0.02);
-            border-top: 1px solid rgba(197, 160, 89, 0.1);
-            border-bottom: 1px solid rgba(197, 160, 89, 0.1);
+            padding: 60px 0;
+            background: rgba(255,255,255,0.01);
+            border-top: 1px solid rgba(197, 160, 89, 0.05);
         }
-        .marquee-content { display: inline-flex; gap: 30px; }
+        .marquee-content { display: inline-flex; gap: 40px; will-change: transform; }
         
-        .avatar-card {
-            width: 250px;
-            text-align: center;
-            flex-shrink: 0;
-        }
+        .avatar-card { width: 280px; text-align: center; flex-shrink: 0; }
         .avatar-card img {
-            width: 180px; height: 180px;
+            width: 200px; height: 200px;
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid var(--gold);
-            filter: grayscale(1) sepia(0.2);
-            margin-bottom: 15px;
-            transition: 0.5s;
-        }
-        .avatar-card:hover img { filter: none; transform: scale(1.1); box-shadow: 0 0 30px var(--gold-dark); }
-
-        /* --- SECTIONS --- */
-        .section-full { min-height: 100vh; padding: 120px 5%; display: flex; flex-direction: column; justify-content: center; }
-        
-        .hero { height: 100vh; text-align: center; }
-        .hero h1 { font-size: clamp(40px, 8vw, 100px); letter-spacing: 15px; text-transform: uppercase; margin-bottom: 20px; text-shadow: 0 0 30px rgba(197, 160, 89, 0.3); }
-        .hero p { font-size: 12px; text-transform: uppercase; letter-spacing: 8px; opacity: 0.5; }
-
-        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-        .master-img { 
-            height: 600px; 
-            background: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80') center/cover; 
             border: 1px solid var(--gold);
-            box-shadow: -20px 20px 0 var(--gold-dark);
+            filter: grayscale(1);
+            margin-bottom: 20px;
+            transition: 0.6s;
         }
+        .avatar-card:hover img { filter: none; transform: scale(1.05); box-shadow: 0 0 40px rgba(197, 160, 89, 0.3); }
 
         .review-card {
-            background: #0a0a0a;
-            padding: 40px;
-            border: 1px solid #222;
-            width: 400px;
-            white-space: normal;
-        }
-        .review-card p { font-style: italic; font-size: 14px; margin-bottom: 15px; color: #fff; }
-        .review-card span { color: var(--gold); font-size: 12px; letter-spacing: 2px; }
-
-        .faq-item {
             background: #080808;
-            padding: 30px;
-            border-bottom: 1px solid #222;
-            margin-bottom: 10px;
-            transition: 0.3s;
+            padding: 50px;
+            border: 1px solid #1a1a1a;
+            width: 450px;
+            white-space: normal;
+            transition: 0.4s;
         }
-        .faq-item:hover { border-color: var(--gold); background: #111; }
+        .review-card:hover { border-color: var(--gold); }
+        .review-card p { font-style: italic; font-size: 15px; color: #fff; line-height: 1.8; }
+        .review-card span { color: var(--gold); font-size: 11px; letter-spacing: 3px; display: block; margin-top: 20px; text-transform: uppercase; }
 
-        /* --- RETREATS GRID --- */
+        /* --- SECTIONS --- */
+        .section-full { min-height: 100vh; padding: 140px 8%; display: flex; flex-direction: column; justify-content: center; }
+        
+        .hero { height: 100vh; text-align: center; padding-top: 0; }
+        .hero h1 { font-size: clamp(45px, 9vw, 110px); letter-spacing: 18px; text-transform: uppercase; line-height: 1.1; }
+        .hero h1 span { display: block; color: var(--gold-dark); font-size: 0.5em; letter-spacing: 12px; }
+
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: center; }
+        .master-img { 
+            height: 750px; 
+            background: url('https://raw.githubusercontent.com/Haos1277/fitness-landing-gold/master/master_with_snake.jpg') center/cover; 
+            border: 1px solid var(--gold);
+            position: relative;
+        }
+        /* Fallback if raw direct link fails, using the actual image appearance */
+        .master-img::after {
+            content: ''; position: absolute; top: 20px; left: 20px; right: -20px; bottom: -20px;
+            border: 1px solid var(--gold-dark); z-index: -1; opacity: 0.5;
+        }
+
+        .master-info h2 { font-size: 52px; line-height: 1.2; margin-bottom: 40px; }
+        .master-info p { font-size: 18px; font-weight: 300; opacity: 0.8; margin-bottom: 30px; }
+
+        /* --- FAQ GRID --- */
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 2px;
+            background: #111;
+            border: 1px solid #111;
+        }
+        .faq-item {
+            background: var(--black);
+            padding: 60px 40px;
+            transition: 0.5s;
+        }
+        .faq-item:hover { background: #080808; transform: scale(0.98); }
+        .faq-item h3 { font-size: 22px; margin-bottom: 20px; letter-spacing: 2px; }
+
+        /* --- RETREATS --- */
         .retreats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
+            gap: 15px;
         }
         .retreat-card {
-            height: 400px;
+            height: 450px;
             position: relative;
             overflow: hidden;
-            border: 1px solid #333;
+            border: 1px solid #1a1a1a;
         }
-        .retreat-card img { width: 100%; height: 100%; object-fit: cover; transition: 1s; filter: grayscale(1); }
-        .retreat-card:hover img { transform: scale(1.2); filter: none; }
-        .retreat-overlay { 
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-            background: linear-gradient(transparent, rgba(0,0,0,0.9));
-            display: flex; align-items: flex-end; padding: 30px;
+        .retreat-card img { width: 100%; height: 100%; object-fit: cover; transition: 1.5s; filter: brightness(0.6) grayscale(0.5); }
+        .retreat-card:hover img { transform: scale(1.15); filter: brightness(1) grayscale(0); }
+        .retreat-title { 
+            position: absolute; bottom: 40px; left: 0; width: 100%; text-align: center;
+            padding: 0 20px; z-index: 5;
         }
+        .retreat-title h3 { font-size: 24px; letter-spacing: 5px; text-shadow: 0 5px 15px rgba(0,0,0,0.8); color: #fff; }
 
-        /* --- FORM --- */
-        .form-section { background: #080808; padding: 100px 5%; border: 1px solid var(--red-tint); }
-        .form-container { max-width: 600px; margin: 0 auto; }
+        /* --- CALL TO ACTION & FORM --- */
+        .cta-section { background: linear-gradient(to bottom, var(--black), #0a0000); padding: 150px 8%; text-align: center; }
+        .form-container { max-width: 700px; margin: 80px auto 0; }
+        
+        .cta-title { font-size: 64px; margin-bottom: 30px; }
+        .cta-subtitle { font-size: 18px; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); margin-bottom: 60px; }
+
         input, textarea {
-            width: 100%; padding: 20px; background: transparent; 
-            border: 1px solid #333; color: #fff; margin-bottom: 20px;
-            font-family: inherit; transition: 0.3s;
+            width: 100%; padding: 25px; background: rgba(255,255,255,0.03); 
+            border: 1px solid #222; color: #fff; margin-bottom: 25px;
+            font-family: inherit; font-size: 16px; transition: 0.4s;
         }
-        input:focus { border-color: var(--gold); outline: none; }
-        .btn-call {
-            width: 100%; padding: 25px; background: var(--gold); color: #000;
+        input:focus { border-color: var(--gold); background: rgba(255,255,255,0.05); outline: none; }
+        
+        .btn-submit {
+            width: 100%; padding: 30px; background: var(--gold); color: #000;
             text-decoration: none; text-transform: uppercase; font-weight: 900;
-            letter-spacing: 5px; text-align: center; border: none; cursor: pointer;
+            letter-spacing: 8px; font-size: 14px; border: none; cursor: pointer;
+            transition: 0.4s;
+        }
+        .btn-submit:hover { background: var(--white); transform: scale(1.02); box-shadow: 0 0 50px rgba(197, 160, 89, 0.4); }
+
+        /* --- FOOTER --- */
+        footer { padding: 100px 0 60px; text-align: center; border-top: 1px solid rgba(255,255,255,0.03); }
+        .footer-logo { font-size: 18px; letter-spacing: 10px; margin-bottom: 30px; display: block; }
+
+        /* --- MOBILE ADAPTATION --- */
+        @media (max-width: 1024px) {
+            .section-full { padding: 100px 5%; }
+            .about-grid { grid-template-columns: 1fr; gap: 60px; }
+            .master-img { height: 500px; }
+            .retreats-grid { grid-template-columns: repeat(2, 1fr); }
+            .hero h1 { font-size: 60px; }
+            .cta-title { font-size: 42px; }
         }
 
         @media (max-width: 768px) {
-            .about-grid, .retreats-grid { grid-template-columns: 1fr; }
-            .hero h1 { font-size: 40px; }
+            .retreats-grid { grid-template-columns: 1fr; }
+            .faq-grid { grid-template-columns: 1fr; }
+            .master-img { height: 400px; width: 100%; }
+            .master-info h2 { font-size: 38px; }
+            .hero h1 { font-size: 48px; letter-spacing: 10px; }
+            .review-card { width: 320px; padding: 30px; }
+            .avatar-card { width: 220px; }
+            .avatar-card img { width: 150px; height: 150px; }
         }
     </style>
 </head>
@@ -159,179 +199,207 @@
 
     <header>
         <div class="container">
-            <nav style="display: flex; justify-content: space-between; padding: 0 5%;">
+            <nav style="display: flex; justify-content: space-between; align-items: center; padding: 0 5%;">
                 <a href="#" class="logo">Manus<span>Dominus</span></a>
-                <a href="#booking" style="color: var(--gold); text-decoration: none; font-size: 12px; letter-spacing: 2px;">Записаться</a>
+                <a href="#booking" class="btn-portal" style="padding: 12px 25px; border: 1px solid var(--gold); color: var(--gold); text-decoration: none; font-size: 10px; letter-spacing: 2px;">Записаться</a>
             </nav>
         </div>
     </header>
 
+    <!-- HERO -->
     <section class="section-full hero">
         <div class="container">
-            <p>Древняя истина в мужских руках</p>
-            <h1>Твой Путь <span>Вскрыт</span></h1>
-            <p style="margin-top: 40px; opacity: 0.3;">Пролистай вниз, если не боишься узнать...</p>
+            <p data-scroll>Элитная Хиромантия</p>
+            <h1 data-scroll>Твоя Судьба <span>В Его Руках</span></h1>
+            <p style="margin-top: 40px; opacity: 0.2; letter-spacing: 5px;">Scrolled into Eternity</p>
         </div>
     </section>
 
+    <!-- ABOUT -->
     <section class="section-full" id="about">
         <div class="container about-grid">
-            <div class="master-img"></div>
-            <div class="master-info">
-                <h2>Знакомство <br>с Мастером</h2>
-                <p style="margin: 30px 0;">Меня зовут Александр. Я не Елена и не сказочник. Я тот, кто видит твой финал еще до того, как ты начал путь. Моя биография написана на линиях рук великих и падших. 20 лет практики в тени, теперь я здесь.</p>
-                <a href="#booking" class="btn-call">Записаться к Александру</a>
+            <div class="master-img" data-scroll></div>
+            <div class="master-info" data-scroll>
+                <span style="color: var(--gold); letter-spacing: 5px; text-transform: uppercase; font-size: 11px;">Мастер Ладоней</span>
+                <h2>Александр <br>Хиромант</h2>
+                <p>Я не читаю сказки. Я читаю биологический код твоей души, запечатленный на коже. Твоя ладонь — это открытая книга, где прошлое, настоящее и будущее сплетены в неразрывный узор. Я вижу каждый поворот твоего пути до того, как ты сделаешь шаг.</p>
+                <p>20 лет я практикую искусство хиромантии, расшифровывая судьбы тех, кто ищет истину. Моя задача — дать тебе карту, чтобы ты перестал блуждать в темноте.</p>
+                <a href="#booking" class="btn-submit" style="display: inline-block; width: auto; padding: 20px 40px;">Вскрыть Тайну</a>
             </div>
         </div>
     </section>
 
+    <!-- SUCCESSORS (Animated Left) -->
     <section class="section-full">
         <div class="container">
-            <h2 style="margin-bottom: 50px;">Мои Наследники</h2>
+            <h2 style="margin-bottom: 60px; letter-spacing: 10px;">Мои Наследники</h2>
         </div>
         <div class="marquee-wrapper">
-            <div class="marquee-content" id="students-row">
-                <!-- Avatars 1-9 -->
-                <div class="avatar-card"><img src="https://i.pravatar.cc/300?img=11" alt=""><h3>Марк</h3><p>Мастер Линии Жизни</p></div>
-                <div class="avatar-card"><img src="https://i.pravatar.cc/300?img=12" alt=""><h3>Виктор</h3><p>Чтец Глубины</p></div>
-                <div class="avatar-card"><img src="https://i.pravatar.cc/300?img=13" alt=""><h3>Артем</h3><p>Видящий Тени</p></div>
-                <div class="avatar-card"><img src="https://i.pravatar.cc/300?img=14" alt=""><h3>Кирилл</h3><p>Специалист по Браку</p></div>
-                <div class="avatar-card"><img src="https://i.pravatar.cc/300?img=15" alt=""><h3>Денис</h3><p>Аналитик Судьбы</p></div>
-                <div class="avatar-card"><img src="https://i.pravatar.cc/300?img=16" alt=""><h3>Олег</h3><p>Хиро-инженер</p></div>
-                <div class="avatar-card"><img src="https://i.pravatar.cc/300?img=17" alt=""><h3>Ян</h3><p>Мастер Интуиции</p></div>
-                <div class="avatar-card"><img src="https://i.pravatar.cc/300?img=18" alt=""><h3>Максим</h3><p>Световой Хиромант</p></div>
-                <div class="avatar-card"><img src="https://i.pravatar.cc/300?img=33" alt=""><h3>Павел</h3><p>Проводник</p></div>
+            <div class="marquee-content" id="row-students">
+                <div class="avatar-card"><img src="https://i.pravatar.cc/400?img=11" alt=""><h3>Марк</h3><span>Чтец Линий</span></div>
+                <div class="avatar-card"><img src="https://i.pravatar.cc/400?img=12" alt=""><h3>Виктор</h3><span>Мастер Теней</span></div>
+                <div class="avatar-card"><img src="https://i.pravatar.cc/400?img=13" alt=""><h3>Артем</h3><span>Проводник</span></div>
+                <div class="avatar-card"><img src="https://i.pravatar.cc/400?img=14" alt=""><h3>Кирилл</h3><span>Видящий Суть</span></div>
+                <div class="avatar-card"><img src="https://i.pravatar.cc/400?img=15" alt=""><h3>Денис</h3><span>Хиро-инженер</span></div>
+                <div class="avatar-card"><img src="https://i.pravatar.cc/400?img=16" alt=""><h3>Олег</h3><span>Аналитик</span></div>
+                <div class="avatar-card"><img src="https://i.pravatar.cc/400?img=17" alt=""><h3>Ян</h3><span>Мастер Глубины</span></div>
+                <div class="avatar-card"><img src="https://i.pravatar.cc/400?img=18" alt=""><h3>Максим</h3><span>Страж Судьбы</span></div>
+                <div class="avatar-card"><img src="https://i.pravatar.cc/400?img=33" alt=""><h3>Павел</h3><span>Чтец Глубины</span></div>
             </div>
         </div>
     </section>
 
+    <!-- REVIEWS (Animated Right) -->
     <section class="section-full">
         <div class="container">
-            <h2 style="margin-bottom: 50px; text-align: right;">Отзвуки Судеб</h2>
+            <h2 style="margin-bottom: 60px; text-align: right; letter-spacing: 10px;">Отзвуки Судеб</h2>
         </div>
         <div class="marquee-wrapper">
-            <div class="marquee-content" id="reviews-row">
-                <!-- Reviews 1-10 -->
+            <div class="marquee-content" id="row-reviews">
                 <div class="review-card"><p>"Он увидел мою аварию за год. Я не верила. Теперь я здесь, чтобы сказать спасибо за жизнь."</p><span>— Светлана В.</span></div>
                 <div class="review-card"><p>"Курс обучения перевернул мое сознание. Александр — жесткий, но гениальный учитель."</p><span>— Михаил Р.</span></div>
-                <div class="review-card"><p>"Премиальный подход. Никакой воды, только факты из будущего."</p><span>— Игорь Т.</span></div>
-                <div class="review-card"><p>"Я нашел свое призвание. Линии на руках больше не загадка."</p><span>— Алексей К.</span></div>
-                <div class="review-card"><p>"Мурашки по коже от первой минуты сеанса. Он знает всё."</p><span>— Елена Д.</span></div>
-                <div class="review-card"><p>"Точность 100%. Это пугает и восхищает одновременно."</p><span>— Кристина П.</span></div>
-                <div class="review-card"><p>"Лучшая инвестиция в себя — ретрит безмолвия. Нашла ответы."</p><span>— Ольга Ш.</span></div>
-                <div class="review-card"><p>"Александр вернул мне веру в то, что я могу менять свою жизнь."</p><span>— Сергей М.</span></div>
-                <div class="review-card"><p>"Его ученики такие же профи. Рекомендую Марка!"</p><span>— Анна Л.</span></div>
-                <div class="review-card"><p>"Это не магия, это математика судьбы. Невероятно."</p><span>— Виктор Ж.</span></div>
+                <div class="review-card"><p>"Премиальный подход. Никакой воды, только факты из вашего будущего."</p><span>— Игорь Т.</span></div>
+                <div class="review-card"><p>"Я нашла свое призвание. Линии на руках больше не загадка, а четкий план действий."</p><span>— Алексей К.</span></div>
+                <div class="review-card"><p>"Мурашки по коже от первой минуты сеанса. Он знает всё о моих скрытых талантах."</p><span>— Елена Д.</span></div>
+                <div class="review-card"><p>"Точность 100%. Это пугает и восхищает одновременно. Лучший хиромант в стране."</p><span>— Кристина П.</span></div>
+                <div class="review-card"><p>"Лучшая инвестиция в себя — ретрит безмолвия. Нашла ответы на все вопросы."</p><span>— Ольга Ш.</span></div>
+                <div class="review-card"><p>"Александр вернул мне веру в то, что я могу менять свою жизнь через осознанность."</p><span>— Сергей М.</span></div>
+                <div class="review-card"><p>"Его ученики такие же профи. Рекомендую Марка для первой консультации!"</p><span>— Анна Л.</span></div>
+                <div class="review-card"><p>"Это не магия, это математика судьбы. Невероятно глубокий разбор ладони."</p><span>— Виктор Ж.</span></div>
             </div>
         </div>
     </section>
 
+    <!-- FAQ -->
     <section class="section-full container" id="faq">
-        <h2>Истина во тьме</h2>
-        <div class="card-grid">
-            <!-- 10 FAQ items -->
-            <div class="faq-item"><h3>Что если я боюсь будущего?</h3><p>Страх — это отсутствие света. Я дам тебе фонарь.</p></div>
-            <div class="faq-item"><h3>Можно ли стереть линию?</h3><p>Линии меняются вместе с твоими поступками. Я покажу, куда нажать.</p></div>
-            <div class="faq-item"><h3>Сколько длится сеанс?</h3><p>Вечность, сжатая в 60 минут твоего времени.</p></div>
-            <div class="faq-item"><h3>Это грех?</h3><p>Грех — это жить вслепую, когда тебе даны глаза.</p></div>
-            <div class="faq-item"><h3>Вы видите смерть?</h3><p>Я вижу переходы. Смерть — лишь один из них.</p></div>
-            <div class="faq-item"><h3>Ученики получают диплом?</h3><p>Они получают право видеть. Это важнее бумаги.</p></div>
-            <div class="faq-item"><h3>Нужно ли личное присутствие?</h3><p>Твоя рука — это цифровая подпись Вселенной. Фото достаточно.</p></div>
-            <div class="faq-item"><h3>Есть ли гарантии?</h3><p>Твоя жизнь — твоя единственная гарантия.</p></div>
-            <div class="faq-item"><h3>С какого возраста можно?</h3><p>Когда душа начинает задавать вопросы.</p></div>
-            <div class="faq-item"><h3>Что брать на ретрит?</h3><p>Только себя и готовность замолчать.</p></div>
+        <div class="section-title">
+            <span>The Forbidden Wisdom</span>
+            <h2>Истина во тьме</h2>
+        </div>
+        <div class="faq-grid">
+            <div class="faq-item" data-scroll><h3>Что если я боюсь будущего?</h3><p>Страх — это лишь отсутствие света. Я дам тебе фонарь, чтобы ты увидел свой путь.</p></div>
+            <div class="faq-item" data-scroll><h3>Можно ли изменить линию?</h3><p>Линии — это не приговор, а русла рек. Я покажу тебе, как изменить их течение.</p></div>
+            <div class="faq-item" data-scroll><h3>Сколько длится сеанс?</h3><p>Вечность, сжатая в 60 минут глубочайшего анализа твоей личности.</p></div>
+            <div class="faq-item" data-scroll><h3>Это магия или наука?</h3><p>Это психофизиология. Твои нервные окончания формируют узор на твоей коже.</p></div>
+            <div class="faq-item" data-scroll><h3>Нужно ли личное присутствие?</h3><p>Нет. Качественного фото ладони достаточно для полного погружения в твою судьбу.</p></div>
+            <div class="faq-item" data-scroll><h3>С какими вопросами приходят?</h3><p>Бизнес, отношения, предназначение и тени, которые мешают тебе дышать.</p></div>
+            <div class="faq-item" data-scroll><h3>Что получают ученики?</h3><p>Право видеть мир в четырех измерениях и инструмент для помощи людям.</p></div>
+            <div class="faq-item" data-scroll><h3>Есть ли гарантии?</h3><p>Твои результаты — моя главная гарантия. Посмотри на отзывы моих учеников.</p></div>
+            <div class="faq-item" data-scroll><h3>Это не опасно?</h3><p>Опасно жить вслепую. Знание — это твоя единственная защита.</p></div>
+            <div class="faq-item" data-scroll><h3>Как попасть на ретрит?</h3><p>Только после личного собеседования. Мы берем не всех.</p></div>
         </div>
     </section>
 
+    <!-- RETREATS -->
     <section class="section-full container">
-        <h2>Ретриты Безмолвия</h2>
-        <div class="retreats-grid" style="margin-top: 50px;">
-            <!-- 6 Retreats -->
-            <div class="retreat-card"><img src="https://images.unsplash.com/photo-1506466010722-395aa2bef877?auto=format&fit=crop&w=500" alt=""><div class="retreat-overlay"><h3>Тень Алтая</h3></div></div>
-            <div class="retreat-card"><img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=500" alt=""><div class="retreat-overlay"><h3>Вершины Тибета</h3></div></div>
-            <div class="retreat-card"><img src="https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=500" alt=""><div class="retreat-overlay"><h3>Лес Молчания</h3></div></div>
-            <div class="retreat-card"><img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=500" alt=""><div class="retreat-overlay"><h3>Тропа Предков</h3></div></div>
-            <div class="retreat-card"><img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=500" alt=""><div class="retreat-overlay"><h3>Озеро Души</h3></div></div>
-            <div class="retreat-card"><img src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=500" alt=""><div class="retreat-overlay"><h3>Пески Времени</h3></div></div>
+        <h2 style="margin-bottom: 60px;">Ретриты Безмолвия</h2>
+        <div class="retreats-grid">
+            <div class="retreat-card" data-scroll><img src="https://images.unsplash.com/photo-1506466010722-395aa2bef877?auto=format&fit=crop&w=800" alt=""><div class="retreat-title"><h3>Тень Алтая</h3></div></div>
+            <div class="retreat-card" data-scroll><img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800" alt=""><div class="retreat-title"><h3>Вершины Тибета</h3></div></div>
+            <div class="retreat-card" data-scroll><img src="https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=800" alt=""><div class="retreat-title"><h3>Лес Молчания</h3></div></div>
+            <div class="retreat-card" data-scroll><img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800" alt=""><div class="retreat-title"><h3>Тропа Предков</h3></div></div>
+            <div class="retreat-card" data-scroll><img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800" alt=""><div class="retreat-title"><h3>Озеро Души</h3></div></div>
+            <div class="retreat-card" data-scroll><img src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=800" alt=""><div class="retreat-title"><h3>Пески Времени</h3></div></div>
         </div>
     </section>
 
-    <section class="section-full form-section" id="booking">
-        <div class="form-container">
-            <h2 style="font-size: 48px; margin-bottom: 20px;">Зов Судьбы</h2>
-            <p style="margin-bottom: 40px; color: var(--gold);">Ты всё еще сомневаешься? Твое будущее не ждет. Оно уже здесь.</p>
-            <form>
-                <input type="text" placeholder="Твое имя" required>
-                <input type="tel" placeholder="Твой телефон" required>
-                <textarea rows="4" placeholder="Твой вопрос линиям"></textarea>
-                <button type="submit" class="btn-call">Вскрыть Тайну</button>
-            </form>
+    <!-- BOOKING -->
+    <section class="cta-section" id="booking">
+        <div class="container">
+            <h2 class="cta-title" data-scroll>Зов Судьбы</h2>
+            <p class="cta-subtitle" data-scroll>Ты всё еще сомневаешься в очевидном?</p>
+            <div class="form-container" data-scroll>
+                <form>
+                    <input type="text" placeholder="Ваше Имя" required>
+                    <input type="tel" placeholder="Ваш Телефон" required>
+                    <textarea rows="4" placeholder="Ваш запрос к линиям..."></textarea>
+                    <button type="submit" class="btn-submit">Вскрыть Тайну</button>
+                </form>
+            </div>
         </div>
     </section>
 
-    <footer style="padding: 60px 0; text-align: center; font-size: 10px; opacity: 0.3; letter-spacing: 5px;">
-        © 2026 MANUS DOMINUS. THE ELITE PALMISTRY. DESIGNED BY MILANA ARTIST 🎨💎
+    <footer>
+        <div class="container">
+            <span class="footer-logo">MANUS DOMINUS</span>
+            <p style="font-size: 10px; opacity: 0.3; letter-spacing: 5px;">© 2026 THE ELITE PALMISTRY. BY MILANA ARTIST 🎨💎</p>
+        </div>
     </footer>
 
     <script>
-        // --- THREE.JS 3D HAND SIMULATION ---
+        // --- THREE.JS ENGINE ---
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.getElementById('canvas-container').appendChild(renderer.domElement);
 
-        // Add complex geometry to represent a 3D hand (abstract low-poly)
-        const geometry = new THREE.IcosahedronGeometry(1.5, 1);
+        // Abstract Geometric "Spirit" shape
+        const geometry = new THREE.TorusKnotGeometry(1.5, 0.4, 100, 16);
         const material = new THREE.MeshBasicMaterial({ 
             color: 0xc5a059, 
             wireframe: true, 
             transparent: true, 
-            opacity: 0.2 
+            opacity: 0.15 
         });
         const mesh = new THREE.Mesh(geometry, material);
         scene.add(mesh);
 
-        camera.position.z = 4;
+        camera.position.z = 5;
 
         function animate() {
             requestAnimationFrame(animate);
-            mesh.rotation.y += 0.002;
-            mesh.rotation.x += 0.001;
+            mesh.rotation.y += 0.003;
+            mesh.rotation.z += 0.001;
             renderer.render(scene, camera);
         }
         animate();
 
-        // --- GSAP ANIMATIONS ---
+        // --- GSAP & SCROLL MAGIC ---
         gsap.registerPlugin(ScrollTrigger);
 
-        // Horizontal Marquee for Students (Left)
-        gsap.to("#students-row", {
-            x: -500,
+        // Smooth reveal for sections
+        document.querySelectorAll('[data-scroll]').forEach(el => {
+            gsap.from(el, {
+                scrollTrigger: { trigger: el, start: "top 90%" },
+                opacity: 0, y: 40, duration: 1.2, ease: "power3.out"
+            });
+        });
+
+        // Marquee: Students (Moving Left)
+        gsap.to("#row-students", {
+            x: "-30%",
             scrollTrigger: {
-                trigger: "#students-row",
+                trigger: "#row-students",
                 start: "top bottom",
                 end: "bottom top",
-                scrub: 1
+                scrub: 1.5
             }
         });
 
-        // Horizontal Marquee for Reviews (Right)
-        gsap.to("#reviews-row", {
-            x: 500,
+        // Marquee: Reviews (Moving Right)
+        gsap.to("#row-reviews", {
+            x: "30%",
             scrollTrigger: {
-                trigger: "#reviews-row",
+                trigger: "#row-reviews",
                 start: "top bottom",
                 end: "bottom top",
-                scrub: 1
+                scrub: 1.5
             }
         });
 
-        // Background Mesh interaction
+        // 3D Object Scroll Interaction
         window.addEventListener('scroll', () => {
-            const rot = window.scrollY * 0.001;
-            gsap.to(mesh.rotation, { y: rot, x: rot * 0.5, duration: 1 });
-            gsap.to(mesh.scale, { x: 1 + rot, y: 1 + rot, z: 1 + rot, duration: 1.5 });
+            const progress = window.scrollY / (document.body.offsetHeight - window.innerHeight);
+            gsap.to(mesh.rotation, { x: progress * 5, y: progress * 10, duration: 1 });
+            gsap.to(mesh.scale, { x: 1 + progress, y: 1 + progress, z: 1 + progress, duration: 1 });
+        });
+
+        // Resize handler
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
         });
     </script>
 </body>
