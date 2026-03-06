@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MANUS DOMINUS | Хиромант — Чтение Судьбы по Ладони</title>
+    <title>MANUS DOMINUS | Дмитрий — Чтение Судьбы по Ладони</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Playfair+Display:ital,wght@0,400;1,400&family=Montserrat:wght@100;300;400;600&display=swap" rel="stylesheet">
     
@@ -51,7 +51,7 @@
 
         .container { position: relative; z-index: 10; width: 100%; }
 
-        /* --- MARQUEE (Aimated Rows) --- */
+        /* --- MARQUEE (Animated Rows) --- */
         .marquee-wrapper { 
             overflow: hidden; 
             white-space: nowrap; 
@@ -66,7 +66,7 @@
             width: 200px; height: 200px;
             border-radius: 50%;
             object-fit: cover;
-            border: 1px solid var(--gold);
+            border: 2px solid var(--gold);
             filter: grayscale(1);
             margin-bottom: 20px;
             transition: 0.6s;
@@ -80,8 +80,9 @@
             width: 450px;
             white-space: normal;
             transition: 0.4s;
+            flex-shrink: 0;
         }
-        .review-card:hover { border-color: var(--gold); }
+        .review-card:hover { border-color: var(--gold); background: #111; }
         .review-card p { font-style: italic; font-size: 15px; color: #fff; line-height: 1.8; }
         .review-card span { color: var(--gold); font-size: 11px; letter-spacing: 3px; display: block; margin-top: 20px; text-transform: uppercase; }
 
@@ -95,11 +96,10 @@
         .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: center; }
         .master-img { 
             height: 750px; 
-            background: url('https://raw.githubusercontent.com/Haos1277/fitness-landing-gold/master/master_with_snake.jpg') center/cover; 
+            background: url('master_with_snake.jpg') center/cover; 
             border: 1px solid var(--gold);
             position: relative;
         }
-        /* Fallback if raw direct link fails, using the actual image appearance */
         .master-img::after {
             content: ''; position: absolute; top: 20px; left: 20px; right: -20px; bottom: -20px;
             border: 1px solid var(--gold-dark); z-index: -1; opacity: 0.5;
@@ -201,7 +201,7 @@
         <div class="container">
             <nav style="display: flex; justify-content: space-between; align-items: center; padding: 0 5%;">
                 <a href="#" class="logo">Manus<span>Dominus</span></a>
-                <a href="#booking" class="btn-portal" style="padding: 12px 25px; border: 1px solid var(--gold); color: var(--gold); text-decoration: none; font-size: 10px; letter-spacing: 2px;">Записаться</a>
+                <a href="#booking" style="padding: 12px 25px; border: 1px solid var(--gold); color: var(--gold); text-decoration: none; font-size: 10px; letter-spacing: 2px;">Записаться</a>
             </nav>
         </div>
     </header>
@@ -221,7 +221,7 @@
             <div class="master-img" data-scroll></div>
             <div class="master-info" data-scroll>
                 <span style="color: var(--gold); letter-spacing: 5px; text-transform: uppercase; font-size: 11px;">Мастер Ладоней</span>
-                <h2>Александр <br>Хиромант</h2>
+                <h2>Дмитрий <br>Хиромант</h2>
                 <p>Я не читаю сказки. Я читаю биологический код твоей души, запечатленный на коже. Твоя ладонь — это открытая книга, где прошлое, настоящее и будущее сплетены в неразрывный узор. Я вижу каждый поворот твоего пути до того, как ты сделаешь шаг.</p>
                 <p>20 лет я практикую искусство хиромантии, расшифровывая судьбы тех, кто ищет истину. Моя задача — дать тебе карту, чтобы ты перестал блуждать в темноте.</p>
                 <a href="#booking" class="btn-submit" style="display: inline-block; width: auto; padding: 20px 40px;">Вскрыть Тайну</a>
@@ -257,13 +257,13 @@
         <div class="marquee-wrapper">
             <div class="marquee-content" id="row-reviews">
                 <div class="review-card"><p>"Он увидел мою аварию за год. Я не верила. Теперь я здесь, чтобы сказать спасибо за жизнь."</p><span>— Светлана В.</span></div>
-                <div class="review-card"><p>"Курс обучения перевернул мое сознание. Александр — жесткий, но гениальный учитель."</p><span>— Михаил Р.</span></div>
+                <div class="review-card"><p>"Курс обучения перевернул мое сознание. Дмитрий — жесткий, но гениальный учитель."</p><span>— Михаил Р.</span></div>
                 <div class="review-card"><p>"Премиальный подход. Никакой воды, только факты из вашего будущего."</p><span>— Игорь Т.</span></div>
                 <div class="review-card"><p>"Я нашла свое призвание. Линии на руках больше не загадка, а четкий план действий."</p><span>— Алексей К.</span></div>
                 <div class="review-card"><p>"Мурашки по коже от первой минуты сеанса. Он знает всё о моих скрытых талантах."</p><span>— Елена Д.</span></div>
                 <div class="review-card"><p>"Точность 100%. Это пугает и восхищает одновременно. Лучший хиромант в стране."</p><span>— Кристина П.</span></div>
                 <div class="review-card"><p>"Лучшая инвестиция в себя — ретрит безмолвия. Нашла ответы на все вопросы."</p><span>— Ольга Ш.</span></div>
-                <div class="review-card"><p>"Александр вернул мне веру в то, что я могу менять свою жизнь через осознанность."</p><span>— Сергей М.</span></div>
+                <div class="review-card"><p>"Дмитрий вернул мне веру в то, что я могу менять свою жизнь через осознанность."</p><span>— Сергей М.</span></div>
                 <div class="review-card"><p>"Его ученики такие же профи. Рекомендую Марка для первой консультации!"</p><span>— Анна Л.</span></div>
                 <div class="review-card"><p>"Это не магия, это математика судьбы. Невероятно глубокий разбор ладони."</p><span>— Виктор Ж.</span></div>
             </div>
@@ -307,7 +307,7 @@
     <section class="cta-section" id="booking">
         <div class="container">
             <h2 class="cta-title" data-scroll>Зов Судьбы</h2>
-            <p class="cta-subtitle" data-scroll>Ты всё еще сомневаешься в очевидном?</p>
+            <p class="cta-subtitle" data-scroll>Ты всё еще сомневаешься в очевидном? Твое будущее не ждет.</p>
             <div class="form-container" data-scroll>
                 <form>
                     <input type="text" placeholder="Ваше Имя" required>
@@ -334,23 +334,36 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.getElementById('canvas-container').appendChild(renderer.domElement);
 
-        // Abstract Geometric "Spirit" shape
-        const geometry = new THREE.TorusKnotGeometry(1.5, 0.4, 100, 16);
-        const material = new THREE.MeshBasicMaterial({ 
-            color: 0xc5a059, 
-            wireframe: true, 
-            transparent: true, 
-            opacity: 0.15 
-        });
-        const mesh = new THREE.Mesh(geometry, material);
-        scene.add(mesh);
+        // CREATE 3D RUNE OF LIFE (ALGIZ)
+        const runeGroup = new THREE.Group();
+        const material = new THREE.MeshBasicMaterial({ color: 0xc5a059, wireframe: true, transparent: true, opacity: 0.4 });
+        
+        // Vertical stem
+        const stemGeom = new THREE.CylinderGeometry(0.05, 0.05, 2, 8);
+        const stem = new THREE.Mesh(stemGeom, material);
+        runeGroup.add(stem);
 
-        camera.position.z = 5;
+        // Left branch
+        const branchLGeom = new THREE.CylinderGeometry(0.05, 0.05, 1, 8);
+        const branchL = new THREE.Mesh(branchLGeom, material);
+        branchL.position.set(-0.35, 0.5, 0);
+        branchL.rotation.z = Math.PI / 4;
+        runeGroup.add(branchL);
+
+        // Right branch
+        const branchR = new THREE.Mesh(branchLGeom, material);
+        branchR.position.set(0.35, 0.5, 0);
+        branchR.rotation.z = -Math.PI / 4;
+        runeGroup.add(branchR);
+
+        scene.add(runeGroup);
+
+        camera.position.z = 3;
 
         function animate() {
             requestAnimationFrame(animate);
-            mesh.rotation.y += 0.003;
-            mesh.rotation.z += 0.001;
+            runeGroup.rotation.y += 0.01;
+            runeGroup.rotation.x += 0.002;
             renderer.render(scene, camera);
         }
         animate();
@@ -368,31 +381,31 @@
 
         // Marquee: Students (Moving Left)
         gsap.to("#row-students", {
-            x: "-30%",
+            x: "-50%",
             scrollTrigger: {
                 trigger: "#row-students",
                 start: "top bottom",
                 end: "bottom top",
-                scrub: 1.5
+                scrub: 1
             }
         });
 
         // Marquee: Reviews (Moving Right)
         gsap.to("#row-reviews", {
-            x: "30%",
+            x: "50%",
             scrollTrigger: {
                 trigger: "#row-reviews",
                 start: "top bottom",
                 end: "bottom top",
-                scrub: 1.5
+                scrub: 1
             }
         });
 
-        // 3D Object Scroll Interaction
+        // 3D Rune Scroll Interaction
         window.addEventListener('scroll', () => {
             const progress = window.scrollY / (document.body.offsetHeight - window.innerHeight);
-            gsap.to(mesh.rotation, { x: progress * 5, y: progress * 10, duration: 1 });
-            gsap.to(mesh.scale, { x: 1 + progress, y: 1 + progress, z: 1 + progress, duration: 1 });
+            gsap.to(runeGroup.rotation, { y: progress * 15, duration: 1 });
+            gsap.to(runeGroup.scale, { x: 1 + progress, y: 1 + progress, z: 1 + progress, duration: 1 });
         });
 
         // Resize handler
