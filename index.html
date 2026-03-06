@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MANUS DOMINUS | Дмитрий — Хиромант</title>
+    <title>MANUS DOMINUS | Дмитрий — Чтение Судьбы по Ладони</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Playfair+Display:ital,wght@0,400;1,400&family=Montserrat:wght@100;300;400;600&display=swap" rel="stylesheet">
     
+    <!-- Scripts for 3D and Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
 
@@ -17,6 +19,7 @@
             --gold-dark: #8c7647;
             --white: #ffffff;
             --gray: #1a1a1a;
+            --blood: #4a0404;
             --transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
@@ -32,10 +35,18 @@
 
         h1, h2, h3 { font-family: 'Cinzel Decorative', cursive; color: var(--gold); }
 
+        /* --- THREE.JS BACKGROUND --- */
+        #canvas-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+
         .overlay-mask {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle, transparent 5%, rgba(0,0,0,0.9) 100%);
+            background: radial-gradient(circle, transparent 5%, rgba(0,0,0,0.95) 100%);
             z-index: 1; pointer-events: none;
         }
 
@@ -49,25 +60,27 @@
             display: flex; 
             flex-direction: column; 
             justify-content: center; 
+            background: rgba(5, 5, 5, 0.1); /* Very light background to separate from 3D */
+            backdrop-filter: blur(1px);
         }
 
         /* --- MARQUEE (Animated Rows) --- */
         .marquee-wrapper { 
             overflow: hidden; 
             white-space: nowrap; 
-            padding: 60px 0;
+            padding: 80px 0;
             background: rgba(255,255,255,0.01);
             border-top: 1px solid rgba(197, 160, 89, 0.05);
             border-bottom: 1px solid rgba(197, 160, 89, 0.05);
         }
-        .marquee-content { display: inline-flex; gap: 40px; will-change: transform; }
+        .marquee-content { display: inline-flex; gap: 50px; will-change: transform; }
         
         .avatar-card { width: 280px; text-align: center; flex-shrink: 0; }
         .avatar-card img {
             width: 200px; height: 200px;
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid var(--gold);
+            border: 1px solid var(--gold);
             filter: grayscale(1);
             margin-bottom: 20px;
             transition: 0.6s;
@@ -76,27 +89,27 @@
 
         .review-card {
             background: #080808;
-            padding: 40px;
+            padding: 50px;
             border: 1px solid #1a1a1a;
-            width: 450px;
+            width: 500px; /* Wider for 16 reviews */
             white-space: normal;
             transition: 0.4s;
             flex-shrink: 0;
         }
         .review-card:hover { border-color: var(--gold); background: #111; }
-        .review-header { display: flex; align-items: center; gap: 20px; margin-bottom: 20px; }
-        .review-img { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 1px solid var(--gold); }
-        .review-card p { font-style: italic; font-size: 14px; color: #fff; line-height: 1.6; }
-        .review-card span { color: var(--gold); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; }
+        .review-header { display: flex; align-items: center; gap: 20px; margin-bottom: 25px; }
+        .review-img { width: 65px; height: 65px; border-radius: 50%; object-fit: cover; border: 1px solid var(--gold); }
+        .review-card p { font-style: italic; font-size: 15px; color: #fff; line-height: 1.8; }
+        .review-card span { color: var(--gold); font-size: 11px; letter-spacing: 3px; display: block; text-transform: uppercase; font-weight: 600; }
 
         /* --- HERO --- */
-        .hero { height: 100vh; text-align: center; padding-top: 0; }
+        .hero { height: 100vh; text-align: center; padding-top: 0; background: none; }
         .hero h1 { font-size: clamp(45px, 9vw, 110px); letter-spacing: 18px; text-transform: uppercase; line-height: 1.1; }
         .hero h1 span { display: block; color: var(--gold-dark); font-size: 0.5em; letter-spacing: 12px; }
 
         .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: center; }
         .master-img { 
-            height: 700px; 
+            height: 750px; 
             background: url('master_with_snake.jpg') center/cover; 
             border: 1px solid var(--gold);
             position: relative;
@@ -112,18 +125,18 @@
         /* --- FAQ GRID --- */
         .faq-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
             gap: 2px;
             background: #111;
             border: 1px solid #111;
         }
         .faq-item {
             background: var(--black);
-            padding: 50px 40px;
+            padding: 60px 40px;
             transition: 0.5s;
         }
-        .faq-item:hover { background: #080808; }
-        .faq-item h3 { font-size: 20px; margin-bottom: 15px; letter-spacing: 2px; }
+        .faq-item:hover { background: #080808; transform: scale(0.98); }
+        .faq-item h3 { font-size: 22px; margin-bottom: 20px; letter-spacing: 2px; }
 
         /* --- RETREATS --- */
         .retreats-grid {
@@ -132,84 +145,109 @@
             gap: 15px;
         }
         .retreat-card {
-            height: 400px;
+            height: 450px;
             position: relative;
             overflow: hidden;
             border: 1px solid #1a1a1a;
         }
-        .retreat-card img { width: 100%; height: 100%; object-fit: cover; transition: 1.5s; filter: brightness(0.5); }
-        .retreat-card:hover img { transform: scale(1.1); filter: brightness(1); }
+        .retreat-card img { width: 100%; height: 100%; object-fit: cover; transition: 1.5s; filter: brightness(0.6) grayscale(0.5); }
+        .retreat-card:hover img { transform: scale(1.15); filter: brightness(1) grayscale(0); }
         .retreat-title { 
-            position: absolute; bottom: 30px; left: 0; width: 100%; text-align: center;
+            position: absolute; bottom: 40px; left: 0; width: 100%; text-align: center;
             padding: 0 20px; z-index: 5;
         }
-        .retreat-title h3 { font-size: 22px; letter-spacing: 4px; text-shadow: 0 5px 10px rgba(0,0,0,0.9); color: #fff; }
+        .retreat-title h3 { font-size: 24px; letter-spacing: 5px; text-shadow: 0 5px 15px rgba(0,0,0,0.8); color: #fff; }
 
-        /* --- CTA & FORM --- */
-        .cta-section { background: #080808; padding: 150px 8%; text-align: center; }
-        .form-container { max-width: 600px; margin: 60px auto 0; }
-        .cta-title { font-size: 54px; margin-bottom: 20px; }
+        /* --- CALL TO ACTION & FORM --- */
+        .cta-section { background: linear-gradient(to bottom, var(--black), #0a0000); padding: 150px 8%; text-align: center; position: relative; z-index: 10; }
+        .form-container { max-width: 700px; margin: 80px auto 0; }
         
+        .cta-title { font-size: 64px; margin-bottom: 30px; }
+        .cta-subtitle { font-size: 18px; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); margin-bottom: 60px; }
+
         input, textarea {
-            width: 100%; padding: 20px; background: rgba(255,255,255,0.02); 
-            border: 1px solid #222; color: #fff; margin-bottom: 20px;
-            font-family: inherit; transition: 0.4s;
+            width: 100%; padding: 25px; background: rgba(255,255,255,0.03); 
+            border: 1px solid #222; color: #fff; margin-bottom: 25px;
+            font-family: inherit; font-size: 16px; transition: 0.4s;
         }
-        input:focus { border-color: var(--gold); outline: none; }
+        input:focus { border-color: var(--gold); background: rgba(255,255,255,0.05); outline: none; }
+        
         .btn-submit {
-            width: 100%; padding: 25px; background: var(--gold); color: #000;
+            width: 100%; padding: 30px; background: var(--gold); color: #000;
             text-decoration: none; text-transform: uppercase; font-weight: 900;
-            letter-spacing: 6px; border: none; cursor: pointer;
+            letter-spacing: 8px; font-size: 14px; border: none; cursor: pointer;
+            transition: 0.4s;
+        }
+        .btn-submit:hover { background: var(--white); transform: scale(1.02); box-shadow: 0 0 50px rgba(197, 160, 89, 0.4); }
+
+        /* --- FOOTER --- */
+        footer { padding: 100px 0 60px; text-align: center; border-top: 1px solid rgba(255,255,255,0.03); position: relative; z-index: 10; background: var(--black); }
+        .footer-logo { font-size: 18px; letter-spacing: 10px; margin-bottom: 30px; display: block; }
+
+        /* --- MOBILE ADAPTATION --- */
+        @media (max-width: 1024px) {
+            .section-full { padding: 100px 5%; }
+            .about-grid { grid-template-columns: 1fr; gap: 60px; }
+            .master-img { height: 500px; }
+            .retreats-grid { grid-template-columns: repeat(2, 1fr); }
+            .hero h1 { font-size: 60px; }
+            .cta-title { font-size: 42px; }
         }
 
-        /* --- MOBILE --- */
-        @media (max-width: 1024px) {
-            .about-grid { grid-template-columns: 1fr; gap: 50px; }
-            .hero h1 { font-size: 50px; }
-            .retreats-grid { grid-template-columns: repeat(2, 1fr); }
-        }
         @media (max-width: 768px) {
             .retreats-grid { grid-template-columns: 1fr; }
-            .review-card { width: 300px; }
-            .avatar-card { width: 200px; }
-            .avatar-card img { width: 140px; height: 140px; }
+            .faq-grid { grid-template-columns: 1fr; }
+            .master-img { height: 400px; width: 100%; }
+            .master-info h2 { font-size: 38px; }
+            .hero h1 { font-size: 48px; letter-spacing: 10px; }
+            .review-card { width: 320px; padding: 30px; }
+            .avatar-card { width: 220px; }
+            .avatar-card img { width: 150px; height: 150px; }
         }
     </style>
 </head>
 <body>
 
+    <div id="canvas-container"></div>
     <div class="overlay-mask"></div>
 
     <header>
         <div class="container">
             <nav style="display: flex; justify-content: space-between; align-items: center; padding: 0 5%;">
                 <a href="#" class="logo">Manus<span>Dominus</span></a>
-                <a href="#booking" style="padding: 10px 20px; border: 1px solid var(--gold); color: var(--gold); text-decoration: none; font-size: 10px; letter-spacing: 2px;">Записаться</a>
+                <a href="#booking" class="btn-portal" style="padding: 12px 25px; border: 1px solid var(--gold); color: var(--gold); text-decoration: none; font-size: 10px; letter-spacing: 2px;">Записаться</a>
             </nav>
         </div>
     </header>
 
+    <!-- HERO -->
     <section class="section-full hero">
         <div class="container">
             <p data-scroll>Элитная Хиромантия</p>
             <h1 data-scroll>Твоя Судьба <span>В Его Руках</span></h1>
+            <p style="margin-top: 40px; opacity: 0.2; letter-spacing: 5px;">Dmitry — The Hand Master</p>
         </div>
     </section>
 
+    <!-- ABOUT -->
     <section class="section-full" id="about">
         <div class="container about-grid">
             <div class="master-img" data-scroll></div>
             <div class="master-info" data-scroll>
-                <span style="color: var(--gold); letter-spacing: 5px; text-transform: uppercase; font-size: 11px;">Хиромант</span>
-                <h2>Дмитрий <br>Мастер Линий</h2>
+                <span style="color: var(--gold); letter-spacing: 5px; text-transform: uppercase; font-size: 11px;">Мастер Ладоней</span>
+                <h2>Дмитрий <br>Хиромант</h2>
                 <p>Я не читаю сказки. Я читаю биологический код твоей души, запечатленный на коже. Твоя ладонь — это открытая книга, где прошлое, настоящее и будущее сплетены в неразрывный узор. Я вижу каждый поворот твоего пути до того, как ты сделаешь шаг.</p>
-                <a href="#booking" class="btn-submit" style="display: inline-block; width: auto; padding: 15px 35px;">Записаться</a>
+                <p>20 лет я практикую искусство хиромантии, расшифровывая судьбы тех, кто ищет истину. Моя задача — дать тебе карту, чтобы ты перестал блуждать в темноте.</p>
+                <a href="#booking" class="btn-submit" style="display: inline-block; width: auto; padding: 20px 40px;">Вскрыть Тайну</a>
             </div>
         </div>
     </section>
 
+    <!-- SUCCESSORS (Animated Left) -->
     <section class="section-full">
-        <div class="container"><h2 style="margin-bottom: 50px; letter-spacing: 8px;">Мои Наследники</h2></div>
+        <div class="container">
+            <h2 style="margin-bottom: 60px; letter-spacing: 10px;">Мои Наследники</h2>
+        </div>
         <div class="marquee-wrapper">
             <div class="marquee-content" id="row-students">
                 <div class="avatar-card"><img src="https://i.pravatar.cc/400?img=11" alt=""><h3>Марк</h3><span>Чтец Линий</span></div>
@@ -220,16 +258,18 @@
                 <div class="avatar-card"><img src="https://i.pravatar.cc/400?img=16" alt=""><h3>Олег</h3><span>Аналитик</span></div>
                 <div class="avatar-card"><img src="https://i.pravatar.cc/400?img=17" alt=""><h3>Ян</h3><span>Мастер Глубины</span></div>
                 <div class="avatar-card"><img src="https://i.pravatar.cc/400?img=18" alt=""><h3>Максим</h3><span>Страж Судьбы</span></div>
-                <div class="avatar-card"><img src="https://i.pravatar.cc/400?img=33" alt=""><h3>Павел</h3><span>Эксперт</span></div>
+                <div class="avatar-card"><img src="https://i.pravatar.cc/400?img=33" alt=""><h3>Павел</h3><span>Чтец Глубины</span></div>
             </div>
         </div>
     </section>
 
+    <!-- REVIEWS (Animated Right) -->
     <section class="section-full">
-        <div class="container"><h2 style="margin-bottom: 50px; text-align: right; letter-spacing: 8px;">Отзвуки Судеб</h2></div>
+        <div class="container">
+            <h2 style="margin-bottom: 60px; text-align: right; letter-spacing: 10px;">Отзвуки Судеб</h2>
+        </div>
         <div class="marquee-wrapper">
             <div class="marquee-content" id="row-reviews">
-                <!-- 16 FULL REVIEWS WITH PHOTOS -->
                 <div class="review-card"><div class="review-header"><img src="https://i.pravatar.cc/150?u=1" class="review-img"><span>Артем С.</span></div><p>"Дмитрий помог мне выбрать правильное время для запуска бизнеса. Его советы по линиям рук сэкономили мне миллионы."</p></div>
                 <div class="review-card"><div class="review-header"><img src="https://i.pravatar.cc/150?u=2" class="review-img"><span>Мария К.</span></div><p>"Невероятная точность. Он увидел переезд в другую страну, о котором я даже не помышляла. Спустя полгода я живу в Праге."</p></div>
                 <div class="review-card"><div class="review-header"><img src="https://i.pravatar.cc/150?u=3" class="review-img"><span>Наталья П.</span></div><p>"Приходила к Дмитрию с вопросом о здоровье. Он указал на критические точки, которые подтвердили врачи. Спасибо!"</p></div>
@@ -250,22 +290,27 @@
         </div>
     </section>
 
+    <!-- FAQ -->
     <section class="section-full container" id="faq">
-        <div class="section-title"><h2>Истина во тьме</h2></div>
+        <div class="section-title">
+            <span>The Forbidden Wisdom</span>
+            <h2>Истина во тьме</h2>
+        </div>
         <div class="faq-grid">
-            <div class="faq-item" data-scroll><h3>Что если я боюсь будущего?</h3><p>Страх — это лишь отсутствие света. Я дам тебе фонарь.</p></div>
-            <div class="faq-item" data-scroll><h3>Можно ли изменить линию?</h3><p>Линии — это не приговор, а русла рек. Течение можно менять.</p></div>
-            <div class="faq-item" data-scroll><h3>Сколько длится сеанс?</h3><p>Вечность, сжатая в 60 минут глубочайшего анализа.</p></div>
-            <div class="faq-item" data-scroll><h3>Это магия или наука?</h3><p>Это психофизиология. Нервы формируют узор на коже.</p></div>
-            <div class="faq-item" data-scroll><h3>Нужно ли личное присутствие?</h3><p>Нет. Качественного фото ладони достаточно для работы.</p></div>
-            <div class="faq-item" data-scroll><h3>С какими вопросами приходят?</h3><p>Бизнес, отношения, предназначение и внутренние тени.</p></div>
-            <div class="faq-item" data-scroll><h3>Что получают ученики?</h3><p>Право видеть мир в четырех измерениях и помогать людям.</p></div>
-            <div class="faq-item" data-scroll><h3>Есть ли гарантии?</h3><p>Твои результаты — моя главная гарантия. Посмотри отзывы.</p></div>
+            <div class="faq-item" data-scroll><h3>Что если я боюсь будущего?</h3><p>Страх — это лишь отсутствие света. Я дам тебе фонарь, чтобы ты увидел свой путь.</p></div>
+            <div class="faq-item" data-scroll><h3>Можно ли изменить линию?</h3><p>Линии — это не приговор, а русла рек. Я покажу тебе, как изменить их течение.</p></div>
+            <div class="faq-item" data-scroll><h3>Сколько длится сеанс?</h3><p>Вечность, сжатая в 60 минут глубочайшего анализа твоей личности.</p></div>
+            <div class="faq-item" data-scroll><h3>Это магия или наука?</h3><p>Это психофизиология. Твои нервные окончания формируют узор на твоей коже.</p></div>
+            <div class="faq-item" data-scroll><h3>Нужно ли личное присутствие?</h3><p>Нет. Качественного фото ладони достаточно для полного погружения в твою судьбу.</p></div>
+            <div class="faq-item" data-scroll><h3>С какими вопросами приходят?</h3><p>Бизнес, отношения, предназначение и тени, которые мешают тебе дышать.</p></div>
+            <div class="faq-item" data-scroll><h3>Что получают ученики?</h3><p>Право видеть мир в четырех измерениях и инструмент для помощи людям.</p></div>
+            <div class="faq-item" data-scroll><h3>Есть ли гарантии?</h3><p>Твои результаты — моя главная гарантия. Посмотри на отзывы моих учеников.</p></div>
             <div class="faq-item" data-scroll><h3>Это не опасно?</h3><p>Опасно жить вслепую. Знание — это твоя единственная защита.</p></div>
             <div class="faq-item" data-scroll><h3>Как попасть на ретрит?</h3><p>Только после личного собеседования. Мы берем не всех.</p></div>
         </div>
     </section>
 
+    <!-- RETREATS -->
     <section class="section-full container">
         <h2 style="margin-bottom: 60px;">Ретриты Безмолвия</h2>
         <div class="retreats-grid">
@@ -278,25 +323,103 @@
         </div>
     </section>
 
+    <!-- BOOKING -->
     <section class="cta-section" id="booking">
         <div class="container">
             <h2 class="cta-title" data-scroll>Зов Судьбы</h2>
-            <p style="margin-bottom: 40px; color: var(--gold); letter-spacing: 3px;">Ты всё еще сомневаешься? Будущее не ждет.</p>
+            <p class="cta-subtitle" data-scroll>Ты всё еще сомневаешься в очевидном? Твое будущее не ждет.</p>
             <div class="form-container" data-scroll>
-                <form><input type="text" placeholder="Ваше Имя" required><input type="tel" placeholder="Ваш Телефон" required><textarea rows="4" placeholder="Ваш запрос..."></textarea><button type="submit" class="btn-submit">Вскрыть Тайну</button></form>
+                <form>
+                    <input type="text" placeholder="Ваше Имя" required>
+                    <input type="tel" placeholder="Ваш Телефон" required>
+                    <textarea rows="4" placeholder="Ваш запрос к линиям..."></textarea>
+                    <button type="submit" class="btn-submit">Вскрыть Тайну</button>
+                </form>
             </div>
         </div>
     </section>
 
-    <footer style="background: var(--black);"><div class="container"><span class="footer-logo">MANUS DOMINUS</span><p style="font-size: 10px; opacity: 0.3; letter-spacing: 5px;">© 2026 THE ELITE PALMISTRY. BY MILANA ARTIST 🎨💎</p></div></footer>
+    <footer>
+        <div class="container">
+            <span class="footer-logo">MANUS DOMINUS</span>
+            <p style="font-size: 10px; opacity: 0.3; letter-spacing: 5px;">© 2026 THE ELITE PALMISTRY. BY MILANA ARTIST 🎨💎</p>
+        </div>
+    </footer>
 
     <script>
-        gsap.registerPlugin(ScrollTrigger);
-        document.querySelectorAll('[data-scroll]').forEach(el => {
-            gsap.from(el, { scrollTrigger: { trigger: el, start: "top 90%" }, opacity: 0, y: 40, duration: 1.2, ease: "power3.out" });
+        // --- THREE.JS ENGINE ---
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+        // Abstract Geometric "Spirit" shape (Back to abstraction)
+        const geometry = new THREE.TorusKnotGeometry(2, 0.5, 120, 20);
+        const material = new THREE.MeshBasicMaterial({ 
+            color: 0xc5a059, 
+            wireframe: true, 
+            transparent: true, 
+            opacity: 0.15 
         });
-        gsap.to("#row-students", { x: "-50%", scrollTrigger: { trigger: "#row-students", start: "top bottom", end: "bottom top", scrub: 1.5 } });
-        gsap.to("#row-reviews", { x: "50%", scrollTrigger: { trigger: "#row-reviews", start: "top bottom", end: "bottom top", scrub: 1.5 } });
+        const mesh = new THREE.Mesh(geometry, material);
+        scene.add(mesh);
+
+        camera.position.z = 6;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            mesh.rotation.y += 0.002;
+            mesh.rotation.x += 0.001;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // --- GSAP & SCROLL MAGIC ---
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Smooth reveal for sections
+        document.querySelectorAll('[data-scroll]').forEach(el => {
+            gsap.from(el, {
+                scrollTrigger: { trigger: el, start: "top 90%" },
+                opacity: 0, y: 40, duration: 1.2, ease: "power3.out"
+            });
+        });
+
+        // SLOWER MARQUEE: Students (Moving Left)
+        gsap.to("#row-students", {
+            x: "-30%", /* Reduced distance for slower speed */
+            scrollTrigger: {
+                trigger: "#row-students",
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 3 /* Increased scrub for smoothness and lower speed */
+            }
+        });
+
+        // SLOWER MARQUEE: Reviews (Moving Right)
+        gsap.to("#row-reviews", {
+            x: "30%", /* Reduced distance for slower speed */
+            scrollTrigger: {
+                trigger: "#row-reviews",
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 3 /* Increased scrub for smoothness and lower speed */
+            }
+        });
+
+        // 3D Object Scroll Interaction
+        window.addEventListener('scroll', () => {
+            const rot = window.scrollY * 0.0005;
+            gsap.to(mesh.rotation, { y: rot * 5, x: rot * 2, duration: 1.5 });
+        });
+
+        // Resize handler
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
     </script>
 </body>
-</html><!-- LAST_UPDATE: 2026-03-06 18:40 -->
+</html>
