@@ -201,7 +201,7 @@
         <div class="container">
             <nav style="display: flex; justify-content: space-between; align-items: center; padding: 0 5%;">
                 <a href="#" class="logo">Manus<span>Dominus</span></a>
-                <a href="#booking" style="padding: 12px 25px; border: 1px solid var(--gold); color: var(--gold); text-decoration: none; font-size: 10px; letter-spacing: 2px;">Записаться</a>
+                <a href="#booking" class="btn-portal" style="padding: 12px 25px; border: 1px solid var(--gold); color: var(--gold); text-decoration: none; font-size: 10px; letter-spacing: 2px;">Записаться</a>
             </nav>
         </div>
     </header>
@@ -259,7 +259,7 @@
                 <div class="review-card"><p>"Он увидел мою аварию за год. Я не верила. Теперь я здесь, чтобы сказать спасибо за жизнь."</p><span>— Светлана В.</span></div>
                 <div class="review-card"><p>"Курс обучения перевернул мое сознание. Дмитрий — жесткий, но гениальный учитель."</p><span>— Михаил Р.</span></div>
                 <div class="review-card"><p>"Премиальный подход. Никакой воды, только факты из вашего будущего."</p><span>— Игорь Т.</span></div>
-                <div class="review-card"><p>"Я нашла свое призвание. Линии на руках больше не загадка, а четкий план действий."</p><span>— Алексей К.</span></div>
+                <div class="review-card"><p>"Я нашел свое призвание. Линии на руках больше не загадка, а четкий план действий."</p><span>— Алексей К.</span></div>
                 <div class="review-card"><p>"Мурашки по коже от первой минуты сеанса. Он знает всё о моих скрытых талантах."</p><span>— Елена Д.</span></div>
                 <div class="review-card"><p>"Точность 100%. Это пугает и восхищает одновременно. Лучший хиромант в стране."</p><span>— Кристина П.</span></div>
                 <div class="review-card"><p>"Лучшая инвестиция в себя — ретрит безмолвия. Нашла ответы на все вопросы."</p><span>— Ольга Ш.</span></div>
@@ -334,84 +334,61 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.getElementById('canvas-container').appendChild(renderer.domElement);
 
-        // CREATE 3D RUNE OF LIFE (ALGIZ)
+        // CREATE 3D WOODEN RUNE STONE
         const runeGroup = new THREE.Group();
-        const material = new THREE.MeshBasicMaterial({ color: 0xc5a059, wireframe: true, transparent: true, opacity: 0.4 });
+        const loader = new THREE.TextureLoader();
+        const woodTexture = loader.load('https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=600&q=80');
+        const geometry = new THREE.CylinderGeometry(1, 1, 0.2, 32);
+        const sideMaterial = new THREE.MeshStandardMaterial({ map: woodTexture, color: 0x443322 });
+        const topMaterial = new THREE.MeshStandardMaterial({ map: woodTexture, color: 0x554433 });
         
-        // Vertical stem
-        const stemGeom = new THREE.CylinderGeometry(0.05, 0.05, 2, 8);
-        const stem = new THREE.Mesh(stemGeom, material);
-        runeGroup.add(stem);
+        const runeCanvas = document.createElement('canvas');
+        runeCanvas.width = 512; runeCanvas.height = 512;
+        const ctx = runeCanvas.getContext('2d');
+        ctx.fillStyle = '#3d2b1f'; ctx.fillRect(0, 0, 512, 512);
+        ctx.strokeStyle = '#000000'; ctx.lineWidth = 30; ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(256, 100); ctx.lineTo(256, 412);
+        ctx.moveTo(256, 256); ctx.lineTo(100, 100);
+        ctx.moveTo(256, 256); ctx.lineTo(412, 100);
+        ctx.stroke();
+        ctx.strokeStyle = '#c5a059'; ctx.lineWidth = 8; ctx.stroke();
 
-        // Left branch
-        const branchLGeom = new THREE.CylinderGeometry(0.05, 0.05, 1, 8);
-        const branchL = new THREE.Mesh(branchLGeom, material);
-        branchL.position.set(-0.35, 0.5, 0);
-        branchL.rotation.z = Math.PI / 4;
-        runeGroup.add(branchL);
+        const runeTexture = new THREE.CanvasTexture(runeCanvas);
+        const runeTopMaterial = new THREE.MeshStandardMaterial({ map: runeTexture, bumpMap: runeTexture, bumpScale: 0.1 });
+        const stone = new THREE.Mesh(geometry, [sideMaterial, runeTopMaterial, topMaterial]);
+        runeGroup.add(stone);
 
-        // Right branch
-        const branchR = new THREE.Mesh(branchLGeom, material);
-        branchR.position.set(0.35, 0.5, 0);
-        branchR.rotation.z = -Math.PI / 4;
-        runeGroup.add(branchR);
-
+        const light = new THREE.PointLight(0xffffff, 1.5, 100); light.position.set(5, 5, 5); scene.add(light);
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5); scene.add(ambientLight);
         scene.add(runeGroup);
-
         camera.position.z = 3;
 
         function animate() {
             requestAnimationFrame(animate);
-            runeGroup.rotation.y += 0.01;
-            runeGroup.rotation.x += 0.002;
+            runeGroup.rotation.y += 0.005;
+            runeGroup.rotation.x = Math.sin(Date.now() * 0.001) * 0.2 + 0.5;
             renderer.render(scene, camera);
         }
         animate();
 
         // --- GSAP & SCROLL MAGIC ---
         gsap.registerPlugin(ScrollTrigger);
-
-        // Smooth reveal for sections
         document.querySelectorAll('[data-scroll]').forEach(el => {
-            gsap.from(el, {
-                scrollTrigger: { trigger: el, start: "top 90%" },
-                opacity: 0, y: 40, duration: 1.2, ease: "power3.out"
-            });
+            gsap.from(el, { scrollTrigger: { trigger: el, start: "top 90%" }, opacity: 0, y: 40, duration: 1.2, ease: "power3.out" });
         });
 
-        // Marquee: Students (Moving Left)
-        gsap.to("#row-students", {
-            x: "-50%",
-            scrollTrigger: {
-                trigger: "#row-students",
-                start: "top bottom",
-                end: "bottom top",
-                scrub: 1
-            }
-        });
+        gsap.to("#row-students", { x: "-50%", scrollTrigger: { trigger: "#row-students", start: "top bottom", end: "bottom top", scrub: 1.5 } });
+        gsap.to("#row-reviews", { x: "50%", scrollTrigger: { trigger: "#row-reviews", start: "top bottom", end: "bottom top", scrub: 1.5 } });
 
-        // Marquee: Reviews (Moving Right)
-        gsap.to("#row-reviews", {
-            x: "50%",
-            scrollTrigger: {
-                trigger: "#row-reviews",
-                start: "top bottom",
-                end: "bottom top",
-                scrub: 1
-            }
-        });
-
-        // 3D Rune Scroll Interaction
         window.addEventListener('scroll', () => {
             const progress = window.scrollY / (document.body.offsetHeight - window.innerHeight);
             gsap.to(runeGroup.rotation, { y: progress * 15, duration: 1 });
-            gsap.to(runeGroup.scale, { x: 1 + progress, y: 1 + progress, z: 1 + progress, duration: 1 });
+            gsap.to(runeGroup.scale, { x: 1 + progress * 0.5, y: 1 + progress * 0.5, z: 1 + progress * 0.5, duration: 1 });
         });
 
-        // Resize handler
         window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
+            camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
     </script>
