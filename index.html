@@ -306,27 +306,33 @@
             gsap.from(el, { scrollTrigger: { trigger: el, start: "top 90%" }, opacity: 0, y: 40, duration: 1.2, ease: "power3.out" });
         });
 
-        // REVIEWS: Moving Right (Slower and Longer Path)
-        gsap.to("#row-reviews", {
-            x: "80%", /* Increased distance to show more cards */
-            scrollTrigger: {
-                trigger: "#row-reviews",
-                start: "top bottom",
-                end: "bottom top",
-                scrub: 4 /* Much slower */
+        // REVIEWS: Start from first card and move
+        gsap.fromTo("#row-reviews", 
+            { x: "0%" }, 
+            {
+                x: "-70%", 
+                scrollTrigger: {
+                    trigger: "#row-reviews",
+                    start: "top bottom",
+                    end: "bottom top",
+                    scrub: 4
+                }
             }
-        });
+        );
 
-        // STUDENTS: Moving Left (Slower)
-        gsap.to("#row-students", {
-            x: "-80%",
-            scrollTrigger: {
-                trigger: "#row-students",
-                start: "top bottom",
-                end: "bottom top",
-                scrub: 4 /* Much slower */
+        // STUDENTS: Start from first card and move
+        gsap.fromTo("#row-students", 
+            { x: "0%" },
+            {
+                x: "-70%",
+                scrollTrigger: {
+                    trigger: "#row-students",
+                    start: "top bottom",
+                    end: "bottom top",
+                    scrub: 4
+                }
             }
-        });
+        );
 
         window.addEventListener('scroll', () => {
             const rot = window.scrollY * 0.0005;
